@@ -211,19 +211,19 @@ export default function CampaignDetailView({
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent border-b border-[#F0F0F0]">
-                <TableHead className="text-[#5C5C5C] font-semibold">
+                <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">
                   Name
                 </TableHead>
-                <TableHead className="text-[#5C5C5C] font-semibold">
+                <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">
                   Mail
                 </TableHead>
-                <TableHead className="text-[#5C5C5C] font-semibold">
+                <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">
                   Amount
                 </TableHead>
-                <TableHead className="text-[#5C5C5C] font-semibold">
+                <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">
                   Campaign Title
                 </TableHead>
-                <TableHead className="text-[#5C5C5C] font-semibold">
+                <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">
                   Date
                 </TableHead>
               </TableRow>
@@ -234,19 +234,19 @@ export default function CampaignDetailView({
                   key={idx}
                   className="hover:bg-slate-50/50 border-b border-[#F0F0F0]"
                 >
-                  <TableCell className="font-semibold text-[#111827]">
+                  <TableCell className="text-center text-[#5C5C5C]">
                     {donor.firstName} {donor.lastName}
                   </TableCell>
-                  <TableCell className="text-[#5C5C5C]">
+                  <TableCell className="text-center text-[#5C5C5C]">
                     {donor.email}
                   </TableCell>
-                  <TableCell className="text-[#111827] font-semibold">
+                  <TableCell className="text-center text-[#1E1E1E] font-medium">
                     {donor.totalDonated}$
                   </TableCell>
-                  <TableCell className="text-[#5C5C5C]">
+                  <TableCell className="text-center font-medium text-[#1E1E1E] max-w-[300px] truncate">
                     {campaign.title}
                   </TableCell>
-                  <TableCell className="text-[#5C5C5C]">
+                  <TableCell className="text-center text-[#5C5C5C]">
                     {formatDate(donor.lastDonatedAt)}
                   </TableCell>
                 </TableRow>
@@ -255,7 +255,7 @@ export default function CampaignDetailView({
                 <TableRow>
                   <TableCell
                     colSpan={5}
-                    className="text-center py-8 text-[#909090]"
+                    className="h-24 text-center text-[#5C5C5C]"
                   >
                     No donations yet.
                   </TableCell>

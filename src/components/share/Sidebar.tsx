@@ -26,7 +26,7 @@ const navigation = [
   { name: "All Campaigns", href: "/campaigns", icon: Megaphone },
   { name: "Manage Users", href: "/users", icon: Users },
   { name: "Producer Request", href: "/producer-request", icon: UserCheck },
-  { name: "Manage Categories", href: "/categories", icon: Grid },
+  { name: "Manage Categories", href: "/manage-categories", icon: Grid },
   { name: "Manage Donations", href: "/donations", icon: CircleDollarSign },
   { name: "Refund", href: "/refund", icon: RotateCcw },
   { name: "CMS Page Management", href: "/cms", icon: FileText },
@@ -87,7 +87,7 @@ export function Sidebar() {
           )}
         </div>
 
-        <nav className="flex-1 space-y-1 flex flex-col items-center justify-start px-4 overflow-y-auto mt-2">
+        <nav className="flex-1 space-y-2 flex flex-col items-center justify-start px-4 overflow-y-auto mt-4">
           {navigation.map((item) => {
             const isActive =
               pathname === item.href ||
