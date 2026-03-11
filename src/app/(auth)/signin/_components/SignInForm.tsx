@@ -21,8 +21,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -37,6 +38,7 @@ const formSchema = z.object({
 const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,14 +49,22 @@ const SignInForm = () => {
     },
   });
 
+  useEffect(() => {
+    if (searchParams.get("error") === "ADMIN_ONLY") {
+      toast.error("Only admin can access this admin dashboard");
+    }
+  }, [searchParams]);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
+      const callbackUrl = searchParams.get("callbackUrl") || "/";
 
       const res = await signIn("credentials", {
         email: values?.email,
         password: values?.password,
         redirect: false,
+        callbackUrl,
       });
 
       if (res?.error) {
@@ -72,7 +82,7 @@ const SignInForm = () => {
         return;
       }
       toast.success("Login successful!");
-      router.push("/");
+      router.push(res?.url || callbackUrl);
     } catch (error) {
       console.error("Login failed:", error);
       toast.error("Login failed. Please try again.");

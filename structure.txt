@@ -1,0 +1,50 @@
+# Project Structure & Tech Stack: kevinmuniz-admin-dashboard
+
+## 🚀 Tech Stack
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **UI & Styling**: 
+  - [Tailwind CSS](https://tailwindcss.com/) for styling.
+  - [Radix UI](https://www.radix-ui.com/) for accessible primitive components.
+  - [Lucide React](https://lucide.dev/) for iconography.
+  - [Shadcn/UI](https://ui.shadcn.com/) patterns (located in `src/components/ui`).
+- **Authentication**: [NextAuth.js](https://next-auth.js.org/) (v4) specialized for Credentials provider.
+- **State Management & Fetching**: 
+  - [TanStack React Query](https://tanstack.com/query/latest) (v5) for server state management.
+  - [Axios](https://axios-http.com/) for HTTP requests.
+- **Forms & Validation**: 
+  - [React Hook Form](https://react-hook-form.com/) for form handling.
+  - [Zod](https://zod.dev/) for schema-based validation.
+- **Visualization**: [Recharts](https://recharts.org/) for charts and data visualization.
+- **Feedback**: [Sonner](https://sonner.stevenly.app/) for toast notifications.
+
+## 📁 Folder Structure
+```text
+/src
+├── app/                 # Routing, Layouts, and Pages (App Router)
+│   ├── (auth)/          # Authentication routes (SignIn, etc.)
+│   ├── (dashboard)/     # Main dashboard application routes
+│   │   ├── settings/    # Feature-based folder example
+│   │   │   ├── _components/   # Component-level UI (modular & private)
+│   │   │   ├── api.ts         # Feature-specific API logic & transformations
+│   │   │   ├── schema.ts      # Feature-specific Zod validation schemas
+│   │   │   ├── types.ts       # Feature-specific TypeScript interfaces
+│   │   │   ├── page.tsx       # Main feature orchestrator
+│   │   │   └── layout.tsx     # Feature-specific layout (if needed)
+│   │   └── ...
+│   ├── api/             # API routes (e.g., auth handlers)
+│   ├── layout.tsx       # Root layout configuration
+│   └── globals.css      # Global Styles
+├── components/          # Cross-cutting reusable UI components
+│   ├── share/           # Shared high-level components (Sidebar, Header)
+│   └── ui/              # Low-level Shadcn UI primitives (Button, Input, etc.)
+├── lib/                 # Core service configurations (auth.ts, axios.ts)
+├── provider/            # Global context providers (React Query, NextAuth)
+└── types/               # Global TypeScript declarations (next-auth.d.ts)
+```
+
+## 🏷️ Type Definition Patterns
+1. **Global Augmentation**: Global or library-specific type overrides are placed in `src/types/` (e.g., extending `next-auth` to include `accessToken` and `role`).
+2. **Schema-driven Types**: Zod schemas are used to infer types for forms and API responses, ensuring consistency between validation and TypeScript interfaces.
+3. **Component Props**: Interfaces for component props are typically defined within the component file itself or in a sibling `types` directory for larger components.
+4. **API Models**: Types representing backend data models are usually kept near the API fetching logic or within a dedicated `types` folder.

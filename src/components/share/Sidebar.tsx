@@ -125,12 +125,7 @@ export function Sidebar() {
         </nav>
 
         <div className="p-4 sm:p-6 border-t border-[#E7E7E7]">
-          <div
-            className="flex items-center gap-3 rounded-lg px-4 py-2 text-base font-medium text-[#FF4D4D] transition-all duration-200 hover:bg-red-50 cursor-pointer"
-            onClick={() => { }} // Handle logout trigger
-          >
-            <LogoutModal />
-          </div>
+          <LogoutModal />
         </div>
       </div>
     </>
