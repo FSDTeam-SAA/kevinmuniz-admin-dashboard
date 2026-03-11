@@ -207,7 +207,7 @@ export default function CampaignDetailView({
       {/* Donation List Section */}
       <div className="space-y-6 pt-12">
         <h2 className="text-2xl font-bold text-[#111827]">Donation list</h2>
-        <div className="rounded-[20px] bg-white p-6 shadow-sm border border-[#F0F0F0]">
+        <div className="rounded-[20px] bg-transparent overflow-hidden">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent border-b border-[#F0F0F0]">

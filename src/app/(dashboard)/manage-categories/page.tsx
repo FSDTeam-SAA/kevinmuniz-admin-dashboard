@@ -104,7 +104,7 @@ export default function ManageCategoriesPage() {
             )}
 
             {/* Table Section */}
-            <div className="rounded-[20px] bg-white p-6 shadow-sm border border-[#F0F0F0]">
+            <div className="pt-2">
                 {isLoading ? (
                     <CategoryTableSkeleton />
                 ) : (
