@@ -4,7 +4,7 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
-import { Search } from 'lucide-react'
+import { Search, ChevronLeft } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { AppPagination } from '@/components/share/AppPagination'
 import { fetchRefundRequests } from './api'
@@ -14,8 +14,8 @@ import { UpdateRefundStatusModal } from './_components/UpdateRefundStatusModal'
 import { RefundDonation } from './types'
 
 export default function RefundPage() {
-  const { data: session } = useSession() as any
-  const token = session?.accessToken as string
+  const { data: session } = useSession();
+  const token = session?.accessToken || "";
 
   const [activeTab, setActiveTab] = useState<'refunded' | 'pending'>('refunded')
   const [page, setPage] = useState(1)
@@ -25,10 +25,40 @@ export default function RefundPage() {
     useState<RefundDonation | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // For the API, we use "pending" to fetch new requests (backend may treat "review" similarly or we could fetch both, but instructions say use status="pending")
+  // For the API, we use "pending&status=review" to fetch both new and review requests
   const { data, isLoading, isError } = useQuery({
     queryKey: ['refunds', activeTab, page],
-    queryFn: () => fetchRefundRequests(token, activeTab, page, 10),
+    queryFn: async () => {
+      if (activeTab === 'refunded') {
+        return fetchRefundRequests(token, 'refunded', page, 10)
+      }
+
+      // Fetch pending and review in parallel
+      const [pendingData, reviewData] = await Promise.all([
+        fetchRefundRequests(token, 'pending', page, 10),
+        fetchRefundRequests(token, 'review', page, 10),
+      ])
+
+      // Merge results
+      return {
+        donations: [...pendingData.donations, ...reviewData.donations],
+        pagination: {
+          currentPage: page,
+          totalPages: Math.max(
+            pendingData.pagination.totalPages,
+            reviewData.pagination.totalPages
+          ),
+          totalData:
+            pendingData.pagination.totalData + reviewData.pagination.totalData,
+          hasNextPage:
+            pendingData.pagination.hasNextPage ||
+            reviewData.pagination.hasNextPage,
+          hasPrevPage:
+            pendingData.pagination.hasPrevPage ||
+            reviewData.pagination.hasPrevPage,
+        },
+      }
+    },
     enabled: !!token,
   })
 
@@ -81,11 +111,16 @@ export default function RefundPage() {
             onClick={() =>
               handleTabChange(activeTab === 'refunded' ? 'pending' : 'refunded')
             }
-            className="bg-[#1E90FF] hover:bg-[#1C86EE] text-white px-4 py-2 rounded-md whitespace-nowrap transition-colors"
+            className="bg-[#1E90FF] hover:bg-[#1C86EE] text-white px-4 py-2 rounded-md whitespace-nowrap transition-colors flex items-center gap-2"
           >
-            {activeTab === 'refunded'
-              ? 'New refund request'
-              : '← Back to Refund'}
+            {activeTab === 'refunded' ? (
+              'New refund request'
+            ) : (
+              <>
+                <ChevronLeft className="h-4 w-4" />
+                Back to Refund
+              </>
+            )}
           </button>
         </div>
       </div>

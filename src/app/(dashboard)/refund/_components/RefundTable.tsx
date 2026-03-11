@@ -8,7 +8,14 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { RefundDonation } from "../types";
 
 interface RefundTableProps {
@@ -18,44 +25,70 @@ interface RefundTableProps {
 }
 
 export function RefundTable({ donations, activeTab, onStatusClick }: RefundTableProps) {
-    const getStatusBadge = (status: string) => {
+    const getStatusConfig = (status: string) => {
         switch (status) {
             case "refunded":
-                return (
-                    <Badge className="bg-[#FFB6C1]/30 text-[#FF6B81] hover:bg-[#FFB6C1]/40 border-none px-4 py-1 rounded-sm uppercase text-[10px] tracking-wider font-semibold">
-                        Refund
-                    </Badge>
-                );
+                return { label: "Refund", className: "bg-[#FF3D00] hover:bg-[#E63700] text-white" }; // Red like Reject/Refunded
             case "pending":
-                return (
-                    <Badge className="bg-[#FCD34D]/30 text-[#F59E0B] hover:bg-[#FCD34D]/40 border-none px-4 py-1 rounded-sm uppercase text-[10px] tracking-wider font-semibold">
-                        Pending
-                    </Badge>
-                );
+                return { label: "Pending", className: "bg-[#FFB100] hover:bg-[#E69F00] text-white" }; // Amber
             case "review":
-                return (
-                    <Badge className="bg-[#93C5FD]/30 text-[#3B82F6] hover:bg-[#93C5FD]/40 border-none px-4 py-1 rounded-sm uppercase text-[10px] tracking-wider font-semibold">
-                        Review
-                    </Badge>
-                );
+                return { label: "Review", className: "bg-[#33BAFF] hover:bg-[#2AA5E5] text-white" }; // Blue like Campaign accepts
             default:
-                return <Badge variant="outline">{status}</Badge>;
+                return { label: status, className: "bg-gray-100 text-gray-800" };
         }
     };
 
     const getInteractiveStatusBadge = (donation: RefundDonation) => {
+        const config = getStatusConfig(donation.refundStatus);
+
         if (activeTab === "refunded") {
-            return getStatusBadge(donation.refundStatus);
+            return (
+                <span
+                    className={cn(
+                        "inline-flex items-center justify-center h-8 min-w-[80px] rounded-[4px] px-3 py-1 text-xs font-semibold whitespace-nowrap",
+                        config.className
+                    )}
+                >
+                    {config.label}
+                </span>
+            );
         }
 
         return (
-            <div
-                className="flex items-center gap-2 cursor-pointer transition-opacity hover:opacity-80"
-                onClick={() => onStatusClick(donation)}
-            >
-                {getStatusBadge(donation.refundStatus)}
-                <ChevronDown className="w-3 h-3 text-muted-foreground" />
-            </div>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                        variant="ghost"
+                        className={cn(
+                            "h-8 min-w-[80px] rounded-[4px] px-3 py-1 text-xs font-semibold gap-1 whitespace-nowrap",
+                            config.className
+                        )}
+                    >
+                        {config.label}
+                        <ChevronDown className="h-3 w-3" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="rounded-[8px] min-w-[120px]">
+                    <DropdownMenuItem
+                        className="text-[#FFB100] focus:text-[#FFB100] focus:bg-[#FFB100]/10 font-medium cursor-pointer"
+                        onClick={() => onStatusClick({ ...donation, refundStatus: "pending" })}
+                    >
+                        Pending
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        className="text-[#33BAFF] focus:text-[#33BAFF] focus:bg-[#33BAFF]/10 font-medium cursor-pointer"
+                        onClick={() => onStatusClick({ ...donation, refundStatus: "review" })}
+                    >
+                        Review
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        className="text-[#FF3D00] focus:text-[#FF3D00] focus:bg-[#FF3D00]/10 font-medium cursor-pointer"
+                        onClick={() => onStatusClick({ ...donation, refundStatus: "refunded" })}
+                    >
+                        Refunded
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
         );
     };
 
@@ -68,17 +101,17 @@ export function RefundTable({ donations, activeTab, onStatusClick }: RefundTable
     }
 
     return (
-        <div className="rounded-md border mt-6 bg-white overflow-hidden">
+        <div className="rounded-[20px] bg-transparent overflow-hidden">
             <Table>
-                <TableHeader className="bg-[#F8F9FA]">
-                    <TableRow className="border-b-[#E5E7EB]">
-                        <TableHead className="font-semibold text-black h-12">Title/Name</TableHead>
-                        <TableHead className="font-semibold text-black h-12">Campaign Name</TableHead>
-                        <TableHead className="font-semibold text-black h-12">Email</TableHead>
-                        <TableHead className="font-semibold text-black h-12 whitespace-nowrap">Given Date</TableHead>
-                        <TableHead className="font-semibold text-black h-12">Status</TableHead>
-                        <TableHead className="font-semibold text-black h-12">Amount</TableHead>
-                        <TableHead className="font-semibold text-black h-12">Action</TableHead>
+                <TableHeader>
+                    <TableRow className="hover:bg-transparent border-b border-[#F0F0F0]">
+                        <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">Title/Name</TableHead>
+                        <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">Campaign Name</TableHead>
+                        <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">Email</TableHead>
+                        <TableHead className="text-left text-[#5C5C5C] font-semibold h-12 whitespace-nowrap">Given Date</TableHead>
+                        <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">Status</TableHead>
+                        <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">Amount</TableHead>
+                        <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -99,32 +132,34 @@ export function RefundTable({ donations, activeTab, onStatusClick }: RefundTable
                         }
 
                         return (
-                            <TableRow key={donation._id} className="border-b-[#E5E7EB]">
-                                <TableCell className="font-medium text-[#4B5563] h-[60px] whitespace-nowrap">
+                            <TableRow key={donation._id} className="hover:bg-slate-50/50 border-b border-[#F0F0F0]">
+                                <TableCell className="text-left font-medium text-[#1E1E1E] max-w-[300px] truncate">
                                     {donation.donorId.firstName} {donation.donorId.lastName}
                                 </TableCell>
-                                <TableCell className="text-[#4B5563]">
+                                <TableCell className="text-left text-[#5C5C5C]">
                                     {campaignTitle}
                                 </TableCell>
-                                <TableCell className="text-[#4B5563]">
+                                <TableCell className="text-left text-[#5C5C5C]">
                                     {donation.donorId.email}
                                 </TableCell>
-                                <TableCell className="text-[#4B5563]">
+                                <TableCell className="text-left text-[#5C5C5C]">
                                     {formattedDate}
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className="text-left">
                                     {getInteractiveStatusBadge(donation)}
                                 </TableCell>
-                                <TableCell className="text-[#4B5563]">
+                                <TableCell className="text-left text-[#5C5C5C]">
                                     {donation.amount.toLocaleString()}
                                 </TableCell>
-                                <TableCell>
-                                    <Link
-                                        href={`/campaigns/${donation.campaignId._id}`}
-                                        className="flex justify-center w-8 h-8 items-center rounded-full hover:bg-gray-100 transition-colors text-gray-400 group"
-                                    >
-                                        <Eye className="w-5 h-5 group-hover:text-gray-600" />
-                                    </Link>
+                                <TableCell className="text-left">
+                                    <div className="flex items-center justify-start gap-3">
+                                        <Link
+                                            href={`/campaigns/${donation.campaignId._id}`}
+                                            className="p-2 text-gray-400 hover:text-[#33BAFF] transition-colors"
+                                        >
+                                            <Eye className="h-5 w-5" />
+                                        </Link>
+                                    </div>
                                 </TableCell>
                             </TableRow>
                         );

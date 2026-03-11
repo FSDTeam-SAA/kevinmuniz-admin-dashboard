@@ -5,19 +5,21 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchRefundRequests = async (
     token: string,
-    status: "refunded" | "pending" | "review",
+    status: string,
     page: number,
     limit: number
 ): Promise<RefundResponse> => {
-    const response = await axios.get(
-        `${API_URL}/donation/refund-requests?status=${status}&page=${page}&limit=${limit}`,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }
-    );
-    return response.data;
+    const response = await axios.get(`${API_URL}/donation/refund-requests`, {
+        params: {
+            status,
+            page,
+            limit,
+        },
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data.data;
 };
 
 export const updateRefundStatus = async (
