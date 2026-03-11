@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { LoaderCircle } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
@@ -11,8 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   changePassword,
   getErrorMessage,
-  getFormattedDate,
-  getFullName,
   getProfile,
   getUserName,
   updateProfile,

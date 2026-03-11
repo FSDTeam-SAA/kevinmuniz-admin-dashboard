@@ -35,7 +35,7 @@ export default function DeleteUserModal({
                     </DialogTitle>
                     <DialogDescription className="pt-2 text-[#6B7280]">
                         Are you sure you want to delete{" "}
-                        <span className="font-semibold text-[#111827]">"{userName}"</span>?
+                        <span className="font-semibold text-[#111827]">&quot;{userName}&quot;</span>?
                         This action cannot be undone.
                     </DialogDescription>
                 </DialogHeader>

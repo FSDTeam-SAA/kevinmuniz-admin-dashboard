@@ -35,7 +35,7 @@ export default function DeleteModal({
                     </DialogTitle>
                     <DialogDescription className="pt-2 text-[#6B7280]">
                         Are you sure you want to delete{" "}
-                        <span className="font-semibold text-[#111827]">"{title}"</span>? This
+                        <span className="font-semibold text-[#111827]">&quot;{title}&quot;</span>? This
                         action cannot be undone.
                     </DialogDescription>
                 </DialogHeader>
