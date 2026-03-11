@@ -22,11 +22,11 @@ import {
 } from "lucide-react";
 
 const navigation = [
-  { name: "Dashboard Overview", href: "/", icon: LayoutDashboard },
+  { name: "Dashboard Overview", href: "/dashboard-overview", icon: LayoutDashboard },
   { name: "All Campaigns", href: "/campaigns", icon: Megaphone },
-  { name: "Manage Users", href: "/users", icon: Users },
+  { name: "Manage Users", href: "/manage-users", icon: Users },
   { name: "Producer Request", href: "/producer-request", icon: UserCheck },
-  { name: "Manage Categories", href: "/categories", icon: Grid },
+  { name: "Manage Categories", href: "/manage-categories", icon: Grid },
   { name: "Manage Donations", href: "/donations", icon: CircleDollarSign },
   { name: "Refund", href: "/refund", icon: RotateCcw },
   { name: "CMS Page Management", href: "/cms", icon: FileText },
@@ -87,7 +87,7 @@ export function Sidebar() {
           )}
         </div>
 
-        <nav className="flex-1 space-y-1 flex flex-col items-center justify-start px-4 overflow-y-auto mt-2">
+        <nav className="flex-1 space-y-2 flex flex-col items-center justify-start px-4 overflow-y-auto mt-4">
           {navigation.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -125,12 +125,7 @@ export function Sidebar() {
         </nav>
 
         <div className="p-4 sm:p-6 border-t border-[#E7E7E7]">
-          <div
-            className="flex items-center gap-3 rounded-lg px-4 py-2 text-base font-medium text-[#FF4D4D] transition-all duration-200 hover:bg-red-50 cursor-pointer"
-            onClick={() => { }} // Handle logout trigger
-          >
-            <LogoutModal />
-          </div>
+          <LogoutModal />
         </div>
       </div>
     </>
