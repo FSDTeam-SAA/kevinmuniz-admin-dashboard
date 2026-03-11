@@ -12,15 +12,15 @@ export interface UserCampaign {
     _id: string;
     title: string;
     shortDescription: string;
-    category: { _id: string; name: string };
+    category?: { _id: string; name: string } | null;
     location: string;
     image: string;
-    approvalStatus: string;
-    activeStatus: string;
+    approvalStatus?: string;
+    activeStatus?: string;
     totalRaised: number;
     userTotalDonated?: number;
     createdAt: string;
-    endDate: string;
+    endDate?: string;
 }
 
 export interface ManagedUser {

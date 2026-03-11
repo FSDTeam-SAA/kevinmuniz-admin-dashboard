@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 const navigation = [
-  { name: "Dashboard Overview", href: "/", icon: LayoutDashboard },
+  { name: "Dashboard Overview", href: "/dashboard-overview", icon: LayoutDashboard },
   { name: "All Campaigns", href: "/campaigns", icon: Megaphone },
   { name: "Manage Users", href: "/manage-users", icon: Users },
   { name: "Producer Request", href: "/producer-request", icon: UserCheck },

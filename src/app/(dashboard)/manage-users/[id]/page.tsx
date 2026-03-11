@@ -3,22 +3,14 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
-import { useSearchParams } from 'next/navigation'
-import { use } from 'react'
+import { useParams, useSearchParams } from 'next/navigation'
 import { fetchUserById } from '../api'
 import UserProfileView from './_components/UserProfileView'
 import UserProfileSkeleton from './_components/UserProfileSkeleton'
 
-interface ManageUserDetailProps {
-  params: Promise<{ id: string }>
-}
-
-export default function ManageUserDetailPage({
-  params,
-}: ManageUserDetailProps) {
-  const resolvedParams = use(params)
-  const id = resolvedParams.id
-
+export default function ManageUserDetailPage() {
+  const params = useParams<{ id: string }>()
+  const id = params?.id || ''
   const searchParams = useSearchParams()
   const role = searchParams.get('role') || 'USER'
 

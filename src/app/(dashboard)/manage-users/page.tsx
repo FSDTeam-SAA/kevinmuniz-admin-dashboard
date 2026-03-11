@@ -3,6 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Search } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import { useState, useMemo } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
@@ -14,11 +15,15 @@ import UsersTableSkeleton from "./_components/UsersTableSkeleton";
 import DeleteUserModal from "./_components/DeleteUserModal";
 
 export default function ManageUsersPage() {
+    const searchParams = useSearchParams();
     const { data: session } = useSession();
     const token = session?.accessToken || "";
     const queryClient = useQueryClient();
+    const initialTab = searchParams.get("tab");
 
-    const [activeTab, setActiveTab] = useState<UserRole>("USER");
+    const [activeTab, setActiveTab] = useState<UserRole>(
+        initialTab === "CREATOR" ? "CREATOR" : "USER"
+    );
     const [page, setPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
     const [deleteModal, setDeleteModal] = useState({

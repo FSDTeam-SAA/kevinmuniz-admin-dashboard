@@ -20,7 +20,7 @@ export default function UserProfileView({ user }: UserProfileViewProps) {
   const title = isCreator ? 'Campaign Creator Profile' : 'Backer Profile'
   const infoTitle = isCreator
     ? 'Campaign Creator Information'
-    : 'Student Information'
+    : 'Backer Information'
 
   const handleSuspend = () => {
     toast.info('Coming soon')
@@ -157,7 +157,7 @@ export default function UserProfileView({ user }: UserProfileViewProps) {
                           : 'bg-gray-100 text-gray-500 border-gray-200 hover:bg-gray-100'
                       }`}
                     >
-                      {camp.activeStatus === 'active' ? 'Active' : 'Inactive'}
+                      {camp.activeStatus === 'active' ? 'Active' : 'Donated'}
                     </Badge>
                   </div>
                   <p className="text-sm text-[#5C5C5C] line-clamp-2 mb-4 leading-relaxed flex-1">
