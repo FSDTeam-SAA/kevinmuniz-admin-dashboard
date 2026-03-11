@@ -24,7 +24,7 @@ import {
 const navigation = [
   { name: "Dashboard Overview", href: "/", icon: LayoutDashboard },
   { name: "All Campaigns", href: "/campaigns", icon: Megaphone },
-  { name: "Manage Users", href: "/users", icon: Users },
+  { name: "Manage Users", href: "/manage-users", icon: Users },
   { name: "Producer Request", href: "/producer-request", icon: UserCheck },
   { name: "Manage Categories", href: "/manage-categories", icon: Grid },
   { name: "Manage Donations", href: "/donations", icon: CircleDollarSign },
