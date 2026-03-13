@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from 'react'
+// import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import {
@@ -8,23 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { RefundDonation } from '../types'
 import { updateRefundStatus } from '../api'
@@ -47,7 +30,6 @@ export function UpdateRefundStatusModal({
     const token = session?.accessToken || "";
     const queryClient = useQueryClient()
 
-    const [isAlertOpen, setIsAlertOpen] = useState(false)
 
     const { mutate: updateStatus, isPending } = useMutation({
         mutationFn: (status: 'pending' | 'review' | 'refunded') =>
@@ -55,12 +37,10 @@ export function UpdateRefundStatusModal({
         onSuccess: () => {
             toast.success('Status updated successfully')
             queryClient.invalidateQueries({ queryKey: ['refunds'] })
-            setIsAlertOpen(false)
             onClose()
         },
         onError: () => {
             toast.error('Failed to update status')
-            setIsAlertOpen(false)
         },
     })
 

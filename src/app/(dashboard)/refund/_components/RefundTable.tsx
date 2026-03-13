@@ -21,7 +21,7 @@ import { RefundDonation } from "../types";
 interface RefundTableProps {
     donations: RefundDonation[];
     activeTab: "refunded" | "pending";
-    onStatusChange: (donation: RefundDonation, newStatus: string) => void;
+    onStatusChange: (donation: RefundDonation, newStatus: 'pending' | 'review' | 'refunded') => void;
 }
 
 export function RefundTable({ donations, activeTab, onStatusChange }: RefundTableProps) {
