@@ -23,6 +23,7 @@ export default function RefundPage() {
 
   const [selectedDonation, setSelectedDonation] =
     useState<RefundDonation | null>(null)
+  const [pendingStatus, setPendingStatus] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   // For the API, we use "pending&status=review" to fetch both new and review requests
@@ -68,9 +69,10 @@ export default function RefundPage() {
     setSearchTerm('')
   }
 
-  const handleStatusClick = (donation: RefundDonation) => {
+  const handleStatusChange = (donation: RefundDonation, newStatus: string) => {
     if (activeTab === 'pending') {
       setSelectedDonation(donation)
+      setPendingStatus(newStatus)
       setIsModalOpen(true)
     }
   }
@@ -136,7 +138,7 @@ export default function RefundPage() {
           <RefundTable
             donations={filteredDonations}
             activeTab={activeTab}
-            onStatusClick={handleStatusClick}
+            onStatusChange={handleStatusChange}
           />
 
           {pagination && pagination.totalData > 0 && (
@@ -156,8 +158,10 @@ export default function RefundPage() {
           onClose={() => {
             setIsModalOpen(false)
             setSelectedDonation(null)
+            setPendingStatus('')
           }}
           donation={selectedDonation}
+          newStatus={pendingStatus}
         />
       )}
     </div>
