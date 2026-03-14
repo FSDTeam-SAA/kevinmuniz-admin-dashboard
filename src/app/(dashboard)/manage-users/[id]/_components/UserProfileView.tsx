@@ -1,5 +1,6 @@
 'use client'
 
+import { useMutation } from '@tanstack/react-query'
 import { ArrowLeft, X } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -8,12 +9,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ManagedUser } from '../../types'
+import { suspendUser } from '../../api'
 
 interface UserProfileViewProps {
   user: ManagedUser
+  token: string
 }
 
-export default function UserProfileView({ user }: UserProfileViewProps) {
+export default function UserProfileView({ user, token }: UserProfileViewProps) {
   const router = useRouter()
 
   const isCreator = user.role === 'CREATOR'
@@ -22,8 +25,20 @@ export default function UserProfileView({ user }: UserProfileViewProps) {
     ? 'Campaign Creator Information'
     : 'Backer Information'
 
+  const suspendUserMutation = useMutation({
+    mutationFn: () => suspendUser(token, user._id),
+    onSuccess: () => {
+      toast.success('User suspended successfully')
+    },
+    onError: error => {
+      const message =
+        error instanceof Error ? error.message : 'Failed to suspend user'
+      toast.error(message)
+    },
+  })
+
   const handleSuspend = () => {
-    toast.info('Coming soon')
+    suspendUserMutation.mutate()
   }
 
   const extractUsername = (email: string) => {
@@ -55,9 +70,10 @@ export default function UserProfileView({ user }: UserProfileViewProps) {
         <h1 className="text-[28px] font-medium text-[#111827]">{title}</h1>
         <Button
           onClick={handleSuspend}
+          disabled={suspendUserMutation.isPending}
           className="rounded-lg bg-[#D32F2F] hover:bg-[#B71C1C] text-white font-semibold gap-2"
         >
-          Suspend
+          {suspendUserMutation.isPending ? 'Suspending...' : 'Suspend'}
           <X className="h-4 w-4" />
         </Button>
       </div>

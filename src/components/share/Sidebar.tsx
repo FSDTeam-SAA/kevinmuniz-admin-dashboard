@@ -16,6 +16,7 @@ import {
   RotateCcw,
   FileText,
   Info,
+  Mail,
   Settings,
   Menu,
   X
@@ -28,6 +29,7 @@ const navigation = [
   { name: "Producer Request", href: "/producer-request", icon: UserCheck },
   { name: "Manage Categories", href: "/manage-categories", icon: Grid },
   { name: "Manage Donations", href: "/donations", icon: CircleDollarSign },
+  { name: "Contact", href: "/contact", icon: Mail },
   { name: "Refund", href: "/refund", icon: RotateCcw },
   { name: "CMS Page Management", href: "/cms", icon: FileText },
   { name: "Report", href: "/report", icon: Info },
