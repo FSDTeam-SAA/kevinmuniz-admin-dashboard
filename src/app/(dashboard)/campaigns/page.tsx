@@ -2,12 +2,11 @@
 'use client'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Search } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { Input } from '@/components/ui/input'
 import { AppPagination } from '@/components/share/AppPagination'
+import { SearchField } from '@/components/share/SearchField'
 import { deleteCampaign, fetchCampaigns, updateCampaignStatus } from './api'
 import CampaignsTable from './_components/CampaignsTable'
 import CampaignTableSkeleton from './_components/CampaignTableSkeleton'
@@ -117,13 +116,7 @@ export default function CampaignsPage() {
       <div className="space-y-6 p-4 md:p-8">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-[#1F2937]">All Campaigns</h1>
-          <div className="relative w-72">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              className="pl-10 h-10 rounded-full bg-white border-[#E9EEF3]"
-              placeholder="Search"
-            />
-          </div>
+          <SearchField className="w-72" />
         </div>
         <CampaignTableSkeleton />
       </div>
@@ -134,15 +127,7 @@ export default function CampaignsPage() {
     <div className="space-y-6 p-4 md:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-[24px] font-bold text-[#1F2937]">All Campaigns</h1>
-        <div className="relative w-full sm:w-72">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="pl-10 h-[40px] rounded-full bg-white border-[#E5E7EB] focus-visible:ring-[#33BAFF]"
-            placeholder="Search"
-          />
-        </div>
+        <SearchField value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
       <div className="p-4 md:p-8">

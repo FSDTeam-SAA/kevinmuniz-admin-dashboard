@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import {
   Area,
@@ -14,7 +14,6 @@ import {
 import type { ValueType } from 'recharts/types/component/DefaultTooltipContent'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DonationReport } from '../types'
-import { cn } from '@/lib/utils'
 
 interface DonationReportChartProps {
   report?: DonationReport
@@ -22,10 +21,6 @@ interface DonationReportChartProps {
   onYearChange: (year: number) => void
   isLoading: boolean
 }
-
-type ChartRange = 'Day' | 'Week' | 'Month' | 'Year'
-
-const chartRanges: ChartRange[] = ['Day', 'Week', 'Month', 'Year']
 
 const monthKeys = [
   'Jan',
@@ -66,8 +61,6 @@ export default function DonationReportChart({
   onYearChange,
   isLoading,
 }: DonationReportChartProps) {
-  const [activeRange, setActiveRange] = useState<ChartRange>('Month')
-
   const chartData = useMemo(() => {
     return monthKeys.map((month, index) => {
       const currentValue = report?.report?.[month] || 0
@@ -102,33 +95,12 @@ export default function DonationReportChart({
 
   return (
     <div className="rounded-[16px] border border-[#DDEBF1] bg-white px-4 py-5 shadow-[0px_3px_12px_rgba(17,24,39,0.04)] md:px-8 md:py-6">
-      <div className="flex flex-col gap-5 border-b border-[#E9EEF2] pb-5 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-5 border-b border-[#E9EEF2] pb-5">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-1">
             <h2 className="text-[18px] font-bold text-[#2D2D2D]">
               Donation report
             </h2>
-            <div className="flex items-center gap-2 text-sm text-[#6B7280]">
-              <button
-                type="button"
-                onClick={() => onYearChange(selectedYear - 1)}
-                className="rounded-full border border-[#E5E7EB] p-1 text-[#6B7280] transition-colors hover:bg-[#F9FAFB]"
-                aria-label="Previous year"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-              <span className="min-w-14 text-center font-semibold text-[#374151]">
-                {selectedYear}
-              </span>
-              <button
-                type="button"
-                onClick={() => onYearChange(selectedYear + 1)}
-                className="rounded-full border border-[#E5E7EB] p-1 text-[#6B7280] transition-colors hover:bg-[#F9FAFB]"
-                aria-label="Next year"
-              >
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
@@ -144,23 +116,28 @@ export default function DonationReportChart({
             </div>
           </div>
         </div>
-
-        <div className="flex items-center gap-2 rounded-[10px] bg-[#F3F4F6] p-1">
-          {chartRanges.map(range => (
+        <div className="flex justify-end">
+          <div className="flex items-center gap-2 text-sm text-[#6B7280]">
             <button
-              key={range}
               type="button"
-              onClick={() => setActiveRange(range)}
-              className={cn(
-                'rounded-[8px] px-4 py-1.5 text-xs font-medium transition-colors',
-                activeRange === range
-                  ? 'bg-[#8B5CF6] text-white shadow-sm'
-                  : 'border border-transparent bg-transparent text-[#666666] hover:bg-white'
-              )}
+              onClick={() => onYearChange(selectedYear - 1)}
+              className="rounded-full border border-[#E5E7EB] p-1 text-[#6B7280] transition-colors hover:bg-[#F9FAFB]"
+              aria-label="Previous year"
             >
-              {range}
+              <ArrowLeft className="h-4 w-4" />
             </button>
-          ))}
+            <span className="min-w-14 text-center font-semibold text-[#374151]">
+              {selectedYear}
+            </span>
+            <button
+              type="button"
+              onClick={() => onYearChange(selectedYear + 1)}
+              className="rounded-full border border-[#E5E7EB] p-1 text-[#6B7280] transition-colors hover:bg-[#F9FAFB]"
+              aria-label="Next year"
+            >
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
 

@@ -1,11 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Search } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState, useMemo } from "react";
-import { Input } from "@/components/ui/input";
 import { AppPagination } from "@/components/share/AppPagination";
+import { SearchField } from "@/components/share/SearchField";
 import { fetchDonations } from "./api";
 import DonationsTable from "./_components/DonationsTable";
 import DonationsTableSkeleton from "./_components/DonationsTableSkeleton";
@@ -42,19 +41,14 @@ export default function DonationsPage() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <h1 className="text-[24px] font-bold text-[#1F2937]">Donations</h1>
 
-                <div className="relative w-full sm:w-[320px]">
-                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                    <Input
-                        type="text"
-                        placeholder="Search"
-                        value={searchTerm}
-                        onChange={(e) => {
-                            setSearchTerm(e.target.value);
-                            setPage(1); // Reset to page 1 on search
-                        }}
-                        className="h-10 w-full rounded-full border-gray-200 bg-white pl-10 focus:border-[#33BAFF] focus:ring-1 focus:ring-[#33BAFF] outline-none shadow-sm"
-                    />
-                </div>
+                <SearchField
+                    className="sm:w-[320px]"
+                    value={searchTerm}
+                    onChange={(e) => {
+                        setSearchTerm(e.target.value);
+                        setPage(1); // Reset to page 1 on search
+                    }}
+                />
             </div>
 
             {/* Main Content */}
