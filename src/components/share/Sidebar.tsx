@@ -63,7 +63,7 @@ export function Sidebar() {
 
       <div
         className={cn(
-          "flex h-screen sticky bottom-0 top-0 flex-col bg-white border-r border-[#E7E7E7] z-50 transition-transform duration-300",
+          "flex h-screen sticky bottom-0 top-0 flex-col bg-white z-50 transition-transform duration-300",
           "fixed lg:static",
           "w-[280px] sm:w-[300px] lg:w-[320px]",
           isMobileMenuOpen
@@ -72,9 +72,14 @@ export function Sidebar() {
         )}
       >
         <div className="h-[120px] flex items-center justify-center relative px-4">
-          <div className="flex items-center justify-center">
+          <Link
+            href="/dashboard-overview"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="flex items-center justify-center"
+            aria-label="Go to dashboard overview"
+          >
             <Image src="/assets/images/autoLogo.png" alt="Logo" width={100} height={100} className="w-[80px] h-[80px] object-contain" />
-          </div>
+          </Link>
 
           {isMobileMenuOpen && (
             <button
@@ -124,7 +129,7 @@ export function Sidebar() {
           })}
         </nav>
 
-        <div className="p-4 sm:p-6 border-t border-[#E7E7E7]">
+        <div className="p-4 sm:p-6">
           <LogoutModal />
         </div>
       </div>
