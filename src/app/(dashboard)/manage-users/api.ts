@@ -98,3 +98,13 @@ export const deleteUser = async (token: string, id: string): Promise<void> => {
         headers: { Authorization: `Bearer ${token}` },
     });
 };
+
+export const suspendUser = async (token: string, id: string): Promise<void> => {
+    await axios.put(
+        `${API_URL}/admin/dashboard/suspend-user/${id}`,
+        {},
+        {
+            headers: { Authorization: `Bearer ${token}` },
+        }
+    );
+};

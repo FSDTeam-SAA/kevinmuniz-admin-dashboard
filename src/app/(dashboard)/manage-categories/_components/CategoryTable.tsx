@@ -32,13 +32,13 @@ export default function CategoryTable({
                         <TableHead className="text-[#5C5C5C] font-semibold">
                             Category Name
                         </TableHead>
-                        <TableHead className="text-[#5C5C5C] font-semibold">
+                        <TableHead className="text-[#5C5C5C] font-semibold text-center">
                             Campaigns
                         </TableHead>
-                        <TableHead className="text-[#5C5C5C] font-semibold">
+                        <TableHead className="text-[#5C5C5C] font-semibold text-center">
                             Last added
                         </TableHead>
-                        <TableHead className="text-[#5C5C5C] font-semibold text-right">
+                        <TableHead className="text-[#5C5C5C] font-semibold text-center">
                             Actions
                         </TableHead>
                     </TableRow>
@@ -55,12 +55,12 @@ export default function CategoryTable({
                                     {cat.description}
                                 </p>
                             </TableCell>
-                            <TableCell className="text-[#5C5C5C]">—</TableCell>
-                            <TableCell className="text-[#5C5C5C]">
+                            <TableCell className="text-[#5C5C5C] text-center">—</TableCell>
+                            <TableCell className="text-[#5C5C5C] text-center">
                                 {formatDate(cat.createdAt)}
                             </TableCell>
-                            <TableCell className="text-right">
-                                <div className="flex items-center justify-end gap-3">
+                            <TableCell className="text-center">
+                                <div className="flex items-center justify-center gap-3">
                                     <Link
                                         href={`/manage-categories/${cat._id}`}
                                         className="p-1.5 text-gray-400 hover:text-[#8C5CFF] transition-colors"

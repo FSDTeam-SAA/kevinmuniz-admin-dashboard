@@ -20,12 +20,7 @@ interface UsersTableProps {
 }
 
 export default function UsersTable({ users, onDelete, role }: UsersTableProps) {
-    const calculateAge = (dob: string | null) => {
-        if (!dob) return "—";
-        const diff = new Date().getTime() - new Date(dob).getTime();
-        const ageDate = new Date(diff);
-        return String(Math.abs(ageDate.getUTCFullYear() - 1970));
-    };
+    // No longer using age calculation as per request
 
     const formatLocation = (address: ManagedUser["address"]) => {
         if (!address) return "—";
@@ -46,7 +41,7 @@ export default function UsersTable({ users, onDelete, role }: UsersTableProps) {
                             User Location
                         </TableHead>
                         <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">
-                            Age
+                            Gender
                         </TableHead>
                         <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">
                             Action
@@ -62,8 +57,10 @@ export default function UsersTable({ users, onDelete, role }: UsersTableProps) {
                             <TableCell className="py-4">
                                 <div className="flex items-center justify-start gap-3">
                                     <Avatar className="h-10 w-10">
-                                        <AvatarImage src={user.profileImage} />
-                                        <AvatarFallback className="bg-gray-100 text-[#111827]">
+                                        {user.profileImage ? (
+                                            <AvatarImage src={user.profileImage} alt={`${user.firstName} ${user.lastName}`} className="object-cover" />
+                                        ) : null}
+                                        <AvatarFallback className="bg-gray-100 text-[#111827] uppercase">
                                             {user.firstName?.[0]}
                                             {user.lastName?.[0]}
                                         </AvatarFallback>
@@ -81,8 +78,8 @@ export default function UsersTable({ users, onDelete, role }: UsersTableProps) {
                             <TableCell className="text-left text-[#5C5C5C]">
                                 {formatLocation(user.address)}
                             </TableCell>
-                            <TableCell className="text-left text-[#5C5C5C]">
-                                {calculateAge(user.dob)}
+                            <TableCell className="text-left text-[#5C5C5C] capitalize">
+                                {user.gender || "—"}
                             </TableCell>
                             <TableCell className="text-left">
                                 <div className="flex items-center justify-start gap-3">

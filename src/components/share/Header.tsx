@@ -14,7 +14,7 @@ export default function Header() {
   const userImage = user?.profileImage || user?.image || "";
 
   return (
-    <div className="flex h-[72px] w-full items-center justify-between border-b border-[#E9EEF3] bg-white px-8">
+    <div className="flex h-[72px] w-full items-center justify-between bg-white px-8">
       <div>
         <h1 className="text-base font-semibold text-[#131313]">Dashboard</h1>
       </div>

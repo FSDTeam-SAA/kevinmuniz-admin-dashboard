@@ -44,5 +44,5 @@ export default function ManageUserDetailPage() {
   // Ensure role overrides the nested object if backend doesn't send it correctly for generic GET
   const targetUser = { ...data, role: role as any }
 
-  return <UserProfileView user={targetUser} />
+  return <UserProfileView user={targetUser} token={token} />
 }

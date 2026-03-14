@@ -21,10 +21,10 @@ import { RefundDonation } from "../types";
 interface RefundTableProps {
     donations: RefundDonation[];
     activeTab: "refunded" | "pending";
-    onStatusClick: (donation: RefundDonation) => void;
+    onStatusChange: (donation: RefundDonation, newStatus: 'pending' | 'review' | 'refunded') => void;
 }
 
-export function RefundTable({ donations, activeTab, onStatusClick }: RefundTableProps) {
+export function RefundTable({ donations, activeTab, onStatusChange }: RefundTableProps) {
     const getStatusConfig = (status: string) => {
         switch (status) {
             case "refunded":
@@ -71,19 +71,19 @@ export function RefundTable({ donations, activeTab, onStatusClick }: RefundTable
                 <DropdownMenuContent align="start" className="rounded-[8px] min-w-[120px]">
                     <DropdownMenuItem
                         className="text-[#FFB100] focus:text-[#FFB100] focus:bg-[#FFB100]/10 font-medium cursor-pointer"
-                        onClick={() => onStatusClick({ ...donation, refundStatus: "pending" })}
+                        onClick={() => onStatusChange(donation, "pending")}
                     >
                         Pending
                     </DropdownMenuItem>
                     <DropdownMenuItem
                         className="text-[#33BAFF] focus:text-[#33BAFF] focus:bg-[#33BAFF]/10 font-medium cursor-pointer"
-                        onClick={() => onStatusClick({ ...donation, refundStatus: "review" })}
+                        onClick={() => onStatusChange(donation, "review")}
                     >
                         Review
                     </DropdownMenuItem>
                     <DropdownMenuItem
                         className="text-[#FF3D00] focus:text-[#FF3D00] focus:bg-[#FF3D00]/10 font-medium cursor-pointer"
-                        onClick={() => onStatusClick({ ...donation, refundStatus: "refunded" })}
+                        onClick={() => onStatusChange(donation, "refunded")}
                     >
                         Refunded
                     </DropdownMenuItem>

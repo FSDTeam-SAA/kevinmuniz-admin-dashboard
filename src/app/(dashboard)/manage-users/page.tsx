@@ -1,13 +1,12 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Search } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState, useMemo } from "react";
 import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
 import { AppPagination } from "@/components/share/AppPagination";
+import { SearchField } from "@/components/share/SearchField";
 import { fetchUsersByRole, deleteUser } from "./api";
 import { UserRole } from "./types";
 import UsersTable from "./_components/UsersTable";
@@ -98,19 +97,14 @@ export default function ManageUsersPage() {
                     </div>
 
                     {/* Search */}
-                    <div className="relative w-full sm:w-[280px]">
-                        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                        <Input
-                            type="text"
-                            placeholder="Search"
-                            value={searchTerm}
-                            onChange={(e) => {
-                                setSearchTerm(e.target.value);
-                                setPage(1);
-                            }}
-                            className="h-[42px] w-full rounded-full border-gray-200 bg-white pl-10 focus:border-[#33BAFF] focus:ring-1 focus:ring-[#33BAFF] outline-none shadow-sm"
-                        />
-                    </div>
+                    <SearchField
+                        className="sm:w-[280px]"
+                        value={searchTerm}
+                        onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setPage(1);
+                        }}
+                    />
                 </div>
             </div>
 

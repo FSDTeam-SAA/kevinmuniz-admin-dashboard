@@ -4,9 +4,9 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
-import { Search, ChevronLeft } from 'lucide-react'
-import { Input } from '@/components/ui/input'
+import { ChevronLeft } from 'lucide-react'
 import { AppPagination } from '@/components/share/AppPagination'
+import { SearchField } from '@/components/share/SearchField'
 import { fetchRefundRequests } from './api'
 import { RefundTable } from './_components/RefundTable'
 import { RefundTableSkeleton } from './_components/RefundTableSkeleton'
@@ -23,6 +23,7 @@ export default function RefundPage() {
 
   const [selectedDonation, setSelectedDonation] =
     useState<RefundDonation | null>(null)
+  const [pendingStatus, setPendingStatus] = useState<'pending' | 'review' | 'refunded' | ''>('')
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   // For the API, we use "pending&status=review" to fetch both new and review requests
@@ -68,9 +69,10 @@ export default function RefundPage() {
     setSearchTerm('')
   }
 
-  const handleStatusClick = (donation: RefundDonation) => {
+  const handleStatusChange = (donation: RefundDonation, newStatus: 'pending' | 'review' | 'refunded') => {
     if (activeTab === 'pending') {
       setSelectedDonation(donation)
+      setPendingStatus(newStatus)
       setIsModalOpen(true)
     }
   }
@@ -96,15 +98,11 @@ export default function RefundPage() {
         </h1>
         <div className="flex items-center gap-4 w-full md:w-auto">
           {activeTab === 'refunded' && (
-            <div className="relative w-full md:w-[300px]">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search"
-                className="pl-9 bg-white"
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-              />
-            </div>
+            <SearchField
+              className="md:w-[300px]"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
           )}
 
           <button
@@ -136,7 +134,7 @@ export default function RefundPage() {
           <RefundTable
             donations={filteredDonations}
             activeTab={activeTab}
-            onStatusClick={handleStatusClick}
+            onStatusChange={handleStatusChange}
           />
 
           {pagination && pagination.totalData > 0 && (
@@ -150,14 +148,16 @@ export default function RefundPage() {
         </>
       )}
 
-      {selectedDonation && (
+      {selectedDonation && pendingStatus && (
         <UpdateRefundStatusModal
           isOpen={isModalOpen}
           onClose={() => {
             setIsModalOpen(false)
             setSelectedDonation(null)
+            setPendingStatus('')
           }}
           donation={selectedDonation}
+          newStatus={pendingStatus}
         />
       )}
     </div>
