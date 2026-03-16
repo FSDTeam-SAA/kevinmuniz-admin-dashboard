@@ -1,6 +1,5 @@
 'use client'
 
-import { LoaderCircle } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -10,6 +9,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface DeleteCampaignModalProps {
   isOpen: boolean
@@ -57,11 +57,7 @@ export default function DeleteCampaignModal({
             onClick={() => onConfirm(campaignId)}
             className="flex-1 rounded-xl bg-[#FF3D00] hover:bg-[#E63700]"
           >
-            {isDeleting ? (
-              <LoaderCircle className="h-4 w-4 animate-spin" />
-            ) : (
-              'Delete'
-            )}
+            {isDeleting ? <Skeleton className="h-4 w-12 rounded-full bg-white/40" /> : 'Delete'}
           </Button>
         </DialogFooter>
       </DialogContent>

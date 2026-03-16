@@ -5,7 +5,6 @@ import {
     ArrowLeft,
     ExternalLink,
     FileText,
-    LoaderCircle,
     MapPin,
 } from "lucide-react";
 import Image from "next/image";
@@ -16,6 +15,7 @@ import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
     deleteRepresentation,
@@ -91,11 +91,10 @@ export default function ProducerRequestDetailPage() {
 
     if (isLoading) {
         return (
-            <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
-                <LoaderCircle className="h-10 w-10 animate-spin text-[#33BAFF]" />
-                <p className="text-sm font-medium text-[#5C5C5C]">
-                    Loading request details...
-                </p>
+            <div className="mx-auto max-w-full space-y-6 p-4 md:p-8">
+                <Skeleton className="h-5 w-16" />
+                <Skeleton className="h-[280px] w-full rounded-[24px]" />
+                <Skeleton className="h-[360px] w-full rounded-[24px]" />
             </div>
         );
     }

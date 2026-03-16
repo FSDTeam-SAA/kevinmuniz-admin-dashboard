@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
-import { LoaderCircle } from 'lucide-react'
+import { Skeleton } from '@/components/ui/skeleton'
 import { fetchCampaignById } from '../api'
 import CampaignDetailView from './_components/CampaignDetailView'
 
@@ -21,11 +21,16 @@ export default function CampaignDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
-        <LoaderCircle className="h-10 w-10 animate-spin text-[#33BAFF]" />
-        <p className="text-sm font-medium text-[#5C5C5C]">
-          Loading campaign details...
-        </p>
+      <div className="mx-auto max-w-full space-y-8 p-4 md:p-8">
+        <Skeleton className="h-5 w-16" />
+        <div className="grid gap-8 lg:grid-cols-12">
+          <div className="space-y-8 lg:col-span-8">
+            <Skeleton className="aspect-[16/9] w-full rounded-[24px]" />
+            <Skeleton className="h-[320px] w-full rounded-[24px]" />
+          </div>
+          <Skeleton className="h-[560px] w-full rounded-[28px] lg:col-span-4" />
+        </div>
+        <Skeleton className="h-[280px] w-full rounded-[24px]" />
       </div>
     )
   }

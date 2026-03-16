@@ -2,10 +2,10 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
     Form,
     FormControl,
@@ -86,11 +86,7 @@ export default function CategoryForm({
                     disabled={isLoading}
                     className="rounded-full bg-[#8C5CFF] hover:bg-[#7A4AEF] text-white font-semibold px-6 gap-2"
                 >
-                    {isLoading ? (
-                        <LoaderCircle className="h-4 w-4 animate-spin" />
-                    ) : (
-                        submitLabel
-                    )}
+                    {isLoading ? <Skeleton className="h-4 w-20 rounded-full bg-white/40" /> : submitLabel}
                 </Button>
             </form>
         </Form>

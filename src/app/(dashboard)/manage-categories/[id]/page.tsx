@@ -1,10 +1,11 @@
 'use client'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, LoaderCircle } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
+import { Skeleton } from '@/components/ui/skeleton'
 import { fetchCategoryById, updateCategory } from '../api'
 import { CategoryFormValues } from '../schema'
 import CategoryForm from '../_components/CategoryForm'
@@ -41,11 +42,24 @@ export default function EditCategoryPage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
-        <LoaderCircle className="h-10 w-10 animate-spin text-[#8C5CFF]" />
-        <p className="text-sm font-medium text-[#5C5C5C]">
-          Loading category...
-        </p>
+      <div className="p-4 md:p-8">
+        <div className="relative mb-8 flex items-center justify-center">
+          <Skeleton className="absolute left-0 h-8 w-8 rounded-full" />
+          <Skeleton className="h-8 w-40 rounded-md" />
+        </div>
+        <div className="mx-auto max-w-7xl rounded-[24px] border border-[#E5E7EB] bg-white p-8 shadow-sm">
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <Skeleton className="h-5 w-32" />
+              <Skeleton className="h-11 w-full rounded-[8px]" />
+            </div>
+            <div className="space-y-3">
+              <Skeleton className="h-5 w-28" />
+              <Skeleton className="h-28 w-full rounded-[8px]" />
+            </div>
+            <Skeleton className="h-11 w-32 rounded-full" />
+          </div>
+        </div>
       </div>
     )
   }
