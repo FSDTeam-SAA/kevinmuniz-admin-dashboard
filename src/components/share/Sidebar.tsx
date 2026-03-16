@@ -31,7 +31,7 @@ const navigation = [
   { name: "Manage Donations", href: "/donations", icon: CircleDollarSign },
   { name: "Contact", href: "/contact", icon: Mail },
   { name: "Refund", href: "/refund", icon: RotateCcw },
-  { name: "CMS Page Management", href: "/cms", icon: FileText },
+  { name: "CMS Page Management", href: "/cms-page-management", icon: FileText },
   { name: "Report", href: "/report", icon: Info },
   { name: "Setting", href: "/settings", icon: Settings },
 ];

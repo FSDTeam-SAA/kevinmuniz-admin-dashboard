@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, LoaderCircle } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -8,6 +8,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
 interface StatusDropdownProps {
@@ -48,7 +49,7 @@ export default function StatusDropdown({
                     )}
                 >
                     {isLoading ? (
-                        <LoaderCircle className="h-3 w-3 animate-spin" />
+                        <Skeleton className="h-3 w-12 rounded-full bg-white/40" />
                     ) : (
                         <>
                             {config.label}

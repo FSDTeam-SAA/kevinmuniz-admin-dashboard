@@ -134,7 +134,7 @@ export default function CampaignDetailView({
                 Campaign Details
               </h2>
               <div
-                className="prose prose-slate max-w-none text-[#5C5C5C] leading-relaxed"
+                className="rich-content"
                 dangerouslySetInnerHTML={{ __html: campaign.campaignDetails }}
               />
             </div>

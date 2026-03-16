@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, EyeOff, LoaderCircle } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 
@@ -22,6 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import type { ChangePasswordFormValues } from "../schema";
 
@@ -180,8 +181,8 @@ export default function ChangePasswordDialog({
                 >
                   {isPending ? (
                     <>
-                      <LoaderCircle className="mr-2 h-5 w-5 animate-spin" />
-                      Saving...
+                      <Skeleton className="mr-2 h-5 w-5 rounded-full bg-white/40" />
+                      <Skeleton className="h-4 w-16 rounded-full bg-white/40" />
                     </>
                   ) : (
                     "Save"

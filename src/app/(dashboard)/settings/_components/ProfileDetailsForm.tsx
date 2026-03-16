@@ -1,6 +1,6 @@
 "use client";
 
-import { Camera, LoaderCircle } from "lucide-react";
+import { Camera } from "lucide-react";
 import Image from "next/image";
 import { RefObject } from "react";
 import { UseFormReturn } from "react-hook-form";
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import type { ProfileFormValues } from "../schema";
 import type { UserProfile } from "../types";
@@ -79,7 +80,7 @@ export default function ProfileDetailsForm({
               aria-label="Upload profile image"
             >
               {isUploadingAvatar ? (
-                <LoaderCircle className="h-6 w-6 animate-spin" />
+                <Skeleton className="h-6 w-6 rounded-full bg-white/50" />
               ) : (
                 <Camera className="h-6 w-6" />
               )}
@@ -286,8 +287,8 @@ export default function ProfileDetailsForm({
               >
                 {isSaving ? (
                   <>
-                    <LoaderCircle className="mr-2 h-5 w-5 animate-spin" />
-                    Saving...
+                    <Skeleton className="mr-2 h-5 w-5 rounded-full bg-white/40" />
+                    <Skeleton className="h-4 w-16 rounded-full bg-white/40" />
                   </>
                 ) : (
                   "Save"
