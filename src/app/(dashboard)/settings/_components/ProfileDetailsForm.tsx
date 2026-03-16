@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 import type { ProfileFormValues } from "../schema";
 import type { UserProfile } from "../types";
@@ -143,6 +144,19 @@ export default function ProfileDetailsForm({
               )}
             />
 
+            <div>
+              <Label className="text-[16px] font-medium text-[#999999]">
+                Email
+              </Label>
+              <Input
+                value={profile?.email || ""}
+                readOnly
+                className={`${fieldClassName} mt-2`}
+              />
+            </div>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
             <FormField
               control={form.control}
               name="phoneNumber"
@@ -177,7 +191,9 @@ export default function ProfileDetailsForm({
                 </FormItem>
               )}
             />
+          </div>
 
+          <div className="grid gap-6 md:grid-cols-2">
             <FormField
               control={form.control}
               name="bio"
@@ -197,9 +213,7 @@ export default function ProfileDetailsForm({
                 </FormItem>
               )}
             />
-          </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
             <FormField
               control={form.control}
               name="country"
@@ -219,7 +233,9 @@ export default function ProfileDetailsForm({
                 </FormItem>
               )}
             />
+          </div>
 
+          <div className="grid gap-6 md:grid-cols-2">
             <FormField
               control={form.control}
               name="cityState"
@@ -247,26 +263,6 @@ export default function ProfileDetailsForm({
                 <FormItem>
                   <FormLabel className="text-[16px] font-medium text-[#999999]">
                     Road/Area
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      readOnly={!isEditing}
-                      className={fieldClassName}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="postalCode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[16px] font-medium text-[#999999]">
-                    Postal Code
                   </FormLabel>
                   <FormControl>
                     <Input
