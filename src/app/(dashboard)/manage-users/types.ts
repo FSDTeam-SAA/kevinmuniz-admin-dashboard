@@ -28,6 +28,7 @@ export interface ManagedUser {
     firstName: string;
     lastName: string;
     email: string;
+    phoneNumber?: string;
     dob: string | null;
     gender: string;
     role: UserRole;

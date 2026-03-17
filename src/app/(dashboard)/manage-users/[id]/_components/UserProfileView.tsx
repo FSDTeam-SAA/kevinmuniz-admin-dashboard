@@ -131,7 +131,7 @@ export default function UserProfileView({ user, token }: UserProfileViewProps) {
           {/* Phone */}
           <div className="space-y-2">
             <p className="text-sm font-medium text-[#909090]">Phone number</p>
-            <p className="text-[#5C5C5C]">—</p>
+            <p className="text-[#5C5C5C]">{user.phoneNumber || '—'}</p>
           </div>
         </div>
         {/* Address */}
