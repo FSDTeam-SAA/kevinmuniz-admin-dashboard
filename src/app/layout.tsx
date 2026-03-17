@@ -20,6 +20,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Kevin Muniz Admin Dashboard',
   description: 'Admin dashboard for Kevin Muniz project',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({

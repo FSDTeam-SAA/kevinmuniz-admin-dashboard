@@ -33,7 +33,7 @@ const navigation = [
   { name: "Refund", href: "/refund", icon: RotateCcw },
   { name: "CMS Page Management", href: "/cms-page-management", icon: FileText },
   { name: "Report", href: "/report", icon: Info },
-  { name: "Setting", href: "/settings", icon: Settings },
+  { name: "Settings", href: "/settings", icon: Settings },
 ];
 
 export function Sidebar() {
