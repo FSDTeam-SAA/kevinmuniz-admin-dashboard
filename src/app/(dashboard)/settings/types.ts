@@ -12,6 +12,7 @@ export interface UserProfile {
   firstName?: string;
   lastName?: string;
   email: string;
+  phoneNumber?: string;
   dob: string | null;
   gender: string;
   role: string;
@@ -33,6 +34,7 @@ export interface UpdateProfilePayload {
   name?: string;
   firstName?: string;
   lastName?: string;
+  phoneNumber?: string;
   gender?: string;
   bio?: string;
   dob?: string | null;

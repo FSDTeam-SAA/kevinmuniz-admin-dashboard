@@ -38,7 +38,7 @@ export default function SettingsPage() {
   const defaultValues = useMemo(
     () => ({
       userName: getUserName(profile),
-      phoneNumber: '+1 (888) 000-0000',
+      phoneNumber: profile?.phoneNumber || '',
       gender: profile?.gender || '',
       bio: profile?.bio || '',
       country: profile?.address?.country || '',
@@ -73,6 +73,7 @@ export default function SettingsPage() {
   const updateProfileMutation = useMutation({
     mutationFn: (values: ProfileFormValues) => {
       return updateProfile(token as string, {
+        phoneNumber: values.phoneNumber,
         gender: values.gender,
         bio: values.bio,
         address: {
