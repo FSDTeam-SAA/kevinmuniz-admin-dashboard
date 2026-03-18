@@ -73,14 +73,14 @@ export function Sidebar() {
             : "-translate-x-full lg:translate-x-0"
         )}
       >
-        <div className="h-[120px] flex items-center justify-center relative px-4">
+        <div className="h-[112px] flex items-center justify-center relative px-4">
           <Link
             href="/dashboard-overview"
             onClick={() => setIsMobileMenuOpen(false)}
             className="flex items-center justify-center"
             aria-label="Go to dashboard overview"
           >
-            <Image src="/assets/images/autoLogo.png" alt="Logo" width={100} height={100} className="w-[80px] h-[80px] object-contain" />
+            <Image src="/assets/images/logo.png" alt="Hierarchy of Visionaries" width={1000} height={1000} className="h-[50px] w-auto object-contain" />
           </Link>
 
           {isMobileMenuOpen && (

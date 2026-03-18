@@ -102,7 +102,7 @@ export default function ResetPasswordForm() {
       <div className="flex w-full items-center justify-center pb-6">
         <Link href="/signin">
           <Image
-            src="/assets/images/autoLogo.png"
+            src="/assets/images/logo.png"
             alt="auth logo"
             width={500}
             height={500}
