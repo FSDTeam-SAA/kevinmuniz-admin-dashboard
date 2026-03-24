@@ -80,7 +80,7 @@ export function Sidebar() {
             className="flex items-center justify-center"
             aria-label="Go to dashboard overview"
           >
-            <Image src="/assets/images/logo.png" alt="Hierarchy of Visionaries" width={1000} height={1000} className="h-[50px] w-auto object-contain" />
+            <Image src="/assets/images/logo.png" alt="Hierarchy of visionaries" width={1000} height={1000} className="h-[50px] w-auto object-contain" />
           </Link>
 
           {isMobileMenuOpen && (
