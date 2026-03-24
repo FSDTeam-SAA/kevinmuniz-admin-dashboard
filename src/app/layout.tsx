@@ -18,8 +18,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Kevin Muniz Admin Dashboard',
-  description: 'Admin dashboard for Kevin Muniz project',
+  title: 'Hierarchy of visionaries Admin Dashboard',
+  description: 'Admin dashboard for Hierarchy of visionaries',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
