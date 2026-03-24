@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye } from "lucide-react";
+import { Download, Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
     Table,
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Donation } from "../types";
+import { downloadDonationReceipt } from "@/utils/downloadDonationReceipt";
 
 interface DonationsTableProps {
     donations: Donation[];
@@ -41,6 +42,9 @@ export default function DonationsTable({ donations }: DonationsTableProps) {
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Campaign Title</TableHead>
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">
                             Campaign Details
+                        </TableHead>
+                        <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">
+                            Receipt
                         </TableHead>
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Date</TableHead>
                     </TableRow>
@@ -73,6 +77,17 @@ export default function DonationsTable({ donations }: DonationsTableProps) {
                                     <Eye className="h-4 w-4" />
                                 </Button>
                             </TableCell>
+                            <TableCell className="text-center">
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() => downloadDonationReceipt(donation)}
+                                    className="mx-auto inline-flex h-8 items-center gap-2 rounded-md border-[#8C5CFF] px-3 text-[#8C5CFF] hover:bg-[#8C5CFF] hover:text-white transition-colors"
+                                >
+                                    <Download className="h-4 w-4" />
+                                    Receipt
+                                </Button>
+                            </TableCell>
                             <TableCell className="text-center text-[#5C5C5C]">
                                 {formatDate(donation.createdAt)}
                             </TableCell>
@@ -80,7 +95,7 @@ export default function DonationsTable({ donations }: DonationsTableProps) {
                     ))}
                     {donations.length === 0 && (
                         <TableRow>
-                            <TableCell colSpan={6} className="h-24 text-center text-[#5C5C5C]">
+                            <TableCell colSpan={7} className="h-24 text-center text-[#5C5C5C]">
                                 No donations found.
                             </TableCell>
                         </TableRow>

@@ -78,11 +78,11 @@ export default function ForgotPasswordForm() {
       <div className="flex w-full items-center justify-center pb-6">
         <Link href="/signin">
           <Image
-            src="/assets/images/autoLogo.png"
+            src="/assets/images/logo.png"
             alt="auth logo"
-            width={500}
-            height={500}
-            className="h-[136px] w-[136px] object-contain"
+            width={1000}
+            height={1000}
+            className="h-[58px] w-auto object-contain md:h-[68px]"
           />
         </Link>
       </div>

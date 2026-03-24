@@ -96,7 +96,7 @@ const SignInForm = () => {
       <div className="w-full rounded-[20px] border border-[#DCEEFE] bg-[#F7F7F7] p-6 shadow-[0px_18px_50px_rgba(46,171,252,0.12)] md:w-[570px] md:p-8">
         <div className="flex w-full items-center justify-center pb-5">
           <Link href="/">
-            <Image src="/assets/images/autoLogo.png" alt="auth logo" width={500} height={500} className="h-[136px] w-[136px] object-contain" />
+            <Image src="/assets/images/logo.png" alt="auth logo" width={1000} height={1000} className="h-[58px] w-auto object-contain md:h-[68px]" />
           </Link>
         </div>
 
