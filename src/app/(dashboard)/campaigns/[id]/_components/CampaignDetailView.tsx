@@ -143,7 +143,7 @@ export default function CampaignDetailView({
 
         {/* Sticky Summary Card */}
         <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-24">
+          <div className="lg:sticky lg:top-20">
             <div className="overflow-hidden rounded-[28px] border border-[#D9CCFF] bg-white shadow-[0_18px_45px_rgba(46,171,252,0.14)]">
               <div className="h-1.5 w-full bg-gradient-to-r from-[#8C5CFF] to-[#2EABFC]" />
               <div className="space-y-6 bg-[linear-gradient(180deg,rgba(140,92,255,0.08)_0%,rgba(46,171,252,0.03)_38%,#FFFFFF_100%)] p-6 md:p-8">
