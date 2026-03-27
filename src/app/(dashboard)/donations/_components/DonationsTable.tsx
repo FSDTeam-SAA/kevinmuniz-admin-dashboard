@@ -39,6 +39,7 @@ export default function DonationsTable({ donations }: DonationsTableProps) {
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Name</TableHead>
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Mail</TableHead>
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Amount</TableHead>
+                        <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Reward</TableHead>
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Campaign Title</TableHead>
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">
                             Campaign Details
@@ -63,6 +64,17 @@ export default function DonationsTable({ donations }: DonationsTableProps) {
                             </TableCell>
                             <TableCell className="text-center text-[#1E1E1E] font-medium">
                                 {donation.amount}$
+                            </TableCell>
+                            <TableCell className="text-center">
+                                {donation.reward ? (
+                                    <span className="inline-flex rounded-full bg-[#F3EEFF] px-3 py-1 text-xs font-semibold text-[#8C5CFF]">
+                                        {donation.reward.title}
+                                    </span>
+                                ) : (
+                                    <span className="inline-flex rounded-full bg-[#F3F4F6] px-3 py-1 text-xs font-semibold text-[#6B7280]">
+                                        No Reward
+                                    </span>
+                                )}
                             </TableCell>
                             <TableCell className="text-center font-medium text-[#1E1E1E] max-w-[300px] truncate">
                                 {donation.campaignId?.title}
@@ -95,7 +107,7 @@ export default function DonationsTable({ donations }: DonationsTableProps) {
                     ))}
                     {donations.length === 0 && (
                         <TableRow>
-                            <TableCell colSpan={7} className="h-24 text-center text-[#5C5C5C]">
+                            <TableCell colSpan={8} className="h-24 text-center text-[#5C5C5C]">
                                 No donations found.
                             </TableCell>
                         </TableRow>

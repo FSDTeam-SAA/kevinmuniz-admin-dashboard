@@ -14,6 +14,13 @@ export interface DonationDonor {
     profileImage: string;
 }
 
+export interface DonationReward {
+    _id: string;
+    title: string;
+    price: number;
+    estimatedDeliveryDate: string;
+}
+
 export type PaymentStatus = "paid" | "pending" | "failed";
 export type RefundStatus = "pending" | "refunded" | null;
 
@@ -28,6 +35,7 @@ export interface Donation {
     refundReason: string | null;
     refundRequestedAt: string | null;
     refundProcessedAt: string | null;
+    reward: DonationReward | null;
     createdAt: string;
     updatedAt: string;
 }

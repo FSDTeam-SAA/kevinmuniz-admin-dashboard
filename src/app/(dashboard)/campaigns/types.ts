@@ -12,6 +12,22 @@ export interface CampaignCreator {
   profileImage?: string
 }
 
+export interface CampaignReward {
+  _id: string
+  campaignId: string
+  title: string
+  description: string
+  price: number
+  quantity: number | null
+  quantityClaimed: number
+  quantityLeft: number | null
+  estimatedDeliveryDate: string
+  isActive: boolean
+  isAvailable: boolean
+  createdAt: string
+  updatedAt: string
+}
+
 export interface Campaign {
   _id: string
   title: string
@@ -61,4 +77,5 @@ export interface CampaignDetailResponse {
   totalDonations: number
   donors: Donor[]
   donorPagination: Pagination
+  rewards: CampaignReward[]
 }

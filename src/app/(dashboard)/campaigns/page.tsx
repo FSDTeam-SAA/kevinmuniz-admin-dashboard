@@ -126,7 +126,12 @@ export default function CampaignsPage() {
   return (
     <div className="space-y-6 p-4 md:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-[24px] font-bold text-[#1F2937]">All Campaigns</h1>
+        <div>
+          <h1 className="text-[24px] font-bold text-[#1F2937]">All Campaigns</h1>
+          <p className="mt-1 text-sm text-[#6B7280]">
+            Open any campaign and use the `Rewards` option to add or manage pledge rewards.
+          </p>
+        </div>
         <SearchField value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 

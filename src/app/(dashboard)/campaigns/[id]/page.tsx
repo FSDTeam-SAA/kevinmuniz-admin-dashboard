@@ -53,6 +53,7 @@ export default function CampaignDetailPage() {
   return (
     <CampaignDetailView
       data={data}
+      token={token}
       donorPage={donorPage}
       onDonorPageChange={setDonorPage}
     />

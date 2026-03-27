@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { ArrowLeft, Calendar, MapPin, Users, Clock } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -17,21 +18,32 @@ import {
 import { CampaignDetailResponse, Donor } from '../../types'
 import { cn } from '@/lib/utils'
 import { AppPagination } from '@/components/share/AppPagination'
+import RewardsManagementPanel from './RewardsManagementPanel'
 
 interface CampaignDetailViewProps {
   data: CampaignDetailResponse
+  token: string
   donorPage: number
   onDonorPageChange: (page: number) => void
 }
 
 export default function CampaignDetailView({
   data,
+  token,
   donorPage,
   onDonorPageChange,
 }: CampaignDetailViewProps) {
   const router = useRouter()
-  const { campaign, totalRaised, totalDonations, donors, donorPagination } =
+  const {
+    campaign,
+    totalRaised,
+    totalDonations,
+    donors,
+    donorPagination,
+    rewards,
+  } =
     data
+  const [activeTab, setActiveTab] = useState<'overview' | 'rewards'>('overview')
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -61,6 +73,41 @@ export default function CampaignDetailView({
         Back
       </button>
 
+      <div className="inline-flex rounded-full border border-[#D7E8FF] bg-white p-1 shadow-sm">
+        <button
+          type="button"
+          onClick={() => setActiveTab('overview')}
+          className={cn(
+            'rounded-full px-5 py-2 text-sm font-semibold transition-colors',
+            activeTab === 'overview'
+              ? 'bg-[#2EABFC] text-white'
+              : 'text-[#4B5563] hover:text-[#2EABFC]',
+          )}
+        >
+          Overview
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('rewards')}
+          className={cn(
+            'rounded-full px-5 py-2 text-sm font-semibold transition-colors',
+            activeTab === 'rewards'
+              ? 'bg-[#2EABFC] text-white'
+              : 'text-[#4B5563] hover:text-[#2EABFC]',
+          )}
+        >
+          Rewards
+        </button>
+      </div>
+
+      {activeTab === 'rewards' ? (
+        <RewardsManagementPanel
+          token={token}
+          campaignId={campaign._id}
+          rewards={rewards}
+        />
+      ) : (
+        <>
       <div className="grid gap-8 lg:grid-cols-12">
         {/* Left Content Column */}
         <div className="space-y-8 lg:col-span-8">
@@ -294,6 +341,8 @@ export default function CampaignDetailView({
           )}
         </div>
       </div>
+        </>
+      )}
     </div>
   )
 }
