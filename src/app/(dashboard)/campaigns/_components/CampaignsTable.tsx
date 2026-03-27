@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, Trash2 } from "lucide-react";
+import { Eye, Gift, Trash2 } from "lucide-react";
 import Link from "next/link";
 import {
     Table,
@@ -88,12 +88,22 @@ export default function CampaignsTable({
                                     <Link
                                         href={`/campaigns/${campaign._id}`}
                                         className="p-2 text-gray-400 hover:text-[#33BAFF] transition-colors"
+                                        title="View campaign"
                                     >
                                         <Eye className="h-5 w-5" />
+                                    </Link>
+                                    <Link
+                                        href={`/campaigns/${campaign._id}`}
+                                        className="inline-flex items-center gap-2 rounded-full border border-[#D7E8FF] px-3 py-2 text-xs font-semibold text-[#2EABFC] transition-colors hover:bg-[#F3FAFF]"
+                                        title="Manage rewards"
+                                    >
+                                        <Gift className="h-4 w-4" />
+                                        Rewards
                                     </Link>
                                     <button
                                         onClick={() => onDelete(campaign._id, campaign.title)}
                                         className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                                        title="Delete campaign"
                                     >
                                         <Trash2 className="h-5 w-5" />
                                     </button>
