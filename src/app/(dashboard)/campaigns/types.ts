@@ -34,6 +34,7 @@ export interface Campaign {
   shortDescription: string
   category: Category
   location: string
+  proposedFunding?: number
   creatingDate: string
   endDate: string
   campaignDetails: string
