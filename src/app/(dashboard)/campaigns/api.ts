@@ -55,6 +55,20 @@ export const updateCampaignStatus = async (
     );
 };
 
+export const updateCampaignControls = async (
+    token: string,
+    id: string,
+    payload: {
+        proposedFunding?: number;
+        creatingDate?: string;
+        endDate?: string;
+    }
+): Promise<void> => {
+    await axios.put(`${API_URL}/campaign/${id}`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+};
+
 export const createReward = async (
     token: string,
     payload: {

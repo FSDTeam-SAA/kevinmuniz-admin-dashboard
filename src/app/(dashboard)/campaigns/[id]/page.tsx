@@ -1,22 +1,40 @@
 'use client'
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
+import { toast } from 'sonner'
 import { Skeleton } from '@/components/ui/skeleton'
-import { fetchCampaignById } from '../api'
+import { fetchCampaignById, updateCampaignControls } from '../api'
 import CampaignDetailView from './_components/CampaignDetailView'
 
 export default function CampaignDetailPage() {
   const { id } = useParams()
   const { data: session } = useSession()
   const token = session?.accessToken || ''
+  const queryClient = useQueryClient()
   const [donorPage, setDonorPage] = useState(1)
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['campaign', id, donorPage],
     queryFn: () => fetchCampaignById(token, id as string, donorPage),
     enabled: !!token && !!id,
+  })
+
+  const updateControlsMutation = useMutation({
+    mutationFn: (payload: {
+      proposedFunding?: number
+      creatingDate?: string
+      endDate?: string
+    }) => updateCampaignControls(token, id as string, payload),
+    onSuccess: () => {
+      toast.success('Campaign controls updated')
+      queryClient.invalidateQueries({ queryKey: ['campaign', id] })
+      queryClient.invalidateQueries({ queryKey: ['campaigns'] })
+    },
+    onError: () => {
+      toast.error('Failed to update campaign controls')
+    },
   })
 
   if (isLoading) {
@@ -56,6 +74,8 @@ export default function CampaignDetailPage() {
       token={token}
       donorPage={donorPage}
       onDonorPageChange={setDonorPage}
+      onUpdateControls={payload => updateControlsMutation.mutate(payload)}
+      isUpdatingControls={updateControlsMutation.isPending}
     />
   )
 }

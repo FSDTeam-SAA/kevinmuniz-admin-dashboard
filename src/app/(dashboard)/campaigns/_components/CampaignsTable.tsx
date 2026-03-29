@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, Gift, Trash2 } from "lucide-react";
+import { Eye, Gift, PenSquare, Trash2 } from "lucide-react";
 import Link from "next/link";
 import {
     Table,
@@ -19,6 +19,7 @@ interface CampaignsTableProps {
     onStatusChange: (id: string, status: "accepted" | "rejected") => void;
     onActiveStatusChange: (id: string, activeStatus: "active" | "inactive") => void;
     onDelete: (id: string, title: string) => void;
+    onEdit: (campaign: Campaign) => void;
     updatingId?: string;
     updatingActiveId?: string;
 }
@@ -28,6 +29,7 @@ export default function CampaignsTable({
     onStatusChange,
     onActiveStatusChange,
     onDelete,
+    onEdit,
     updatingId,
     updatingActiveId,
 }: CampaignsTableProps) {
@@ -92,6 +94,13 @@ export default function CampaignsTable({
                                     >
                                         <Eye className="h-5 w-5" />
                                     </Link>
+                                    <button
+                                        onClick={() => onEdit(campaign)}
+                                        className="p-2 text-gray-400 hover:text-[#8C5CFF] transition-colors"
+                                        title="Edit controls"
+                                    >
+                                        <PenSquare className="h-5 w-5" />
+                                    </button>
                                     <Link
                                         href={`/campaigns/${campaign._id}`}
                                         className="inline-flex items-center gap-2 rounded-full border border-[#D7E8FF] px-3 py-2 text-xs font-semibold text-[#2EABFC] transition-colors hover:bg-[#F3FAFF]"

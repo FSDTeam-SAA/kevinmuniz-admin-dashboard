@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ArrowLeft, Calendar, MapPin, Users, Clock } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Table,
@@ -25,13 +26,24 @@ interface CampaignDetailViewProps {
   token: string
   donorPage: number
   onDonorPageChange: (page: number) => void
+  onUpdateControls: (payload: {
+    proposedFunding?: number
+    creatingDate?: string
+    endDate?: string
+  }) => void
+  isUpdatingControls: boolean
 }
+
+const formatDateInputValue = (value: string) =>
+  value ? new Date(value).toISOString().slice(0, 10) : ''
 
 export default function CampaignDetailView({
   data,
   token,
   donorPage,
   onDonorPageChange,
+  onUpdateControls,
+  isUpdatingControls,
 }: CampaignDetailViewProps) {
   const router = useRouter()
   const {
@@ -44,6 +56,19 @@ export default function CampaignDetailView({
   } =
     data
   const [activeTab, setActiveTab] = useState<'overview' | 'rewards'>('overview')
+  const [controlValues, setControlValues] = useState({
+    proposedFunding: campaign.proposedFunding ? String(campaign.proposedFunding) : '',
+    creatingDate: formatDateInputValue(campaign.creatingDate),
+    endDate: formatDateInputValue(campaign.endDate),
+  })
+
+  useEffect(() => {
+    setControlValues({
+      proposedFunding: campaign.proposedFunding ? String(campaign.proposedFunding) : '',
+      creatingDate: formatDateInputValue(campaign.creatingDate),
+      endDate: formatDateInputValue(campaign.endDate),
+    })
+  }, [campaign.creatingDate, campaign.endDate, campaign.proposedFunding])
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -61,6 +86,20 @@ export default function CampaignDetailView({
   const getDaysLeft = (endDate: string) => {
     const remaining = new Date(endDate).getTime() - new Date().getTime()
     return Math.max(0, Math.ceil(remaining / (1000 * 60 * 60 * 24)))
+  }
+
+  const handleControlSave = () => {
+    onUpdateControls({
+      proposedFunding: controlValues.proposedFunding
+        ? Number(controlValues.proposedFunding)
+        : undefined,
+      creatingDate: controlValues.creatingDate
+        ? new Date(controlValues.creatingDate).toISOString()
+        : undefined,
+      endDate: controlValues.endDate
+        ? new Date(controlValues.endDate).toISOString()
+        : undefined,
+    })
   }
 
   return (
@@ -184,6 +223,83 @@ export default function CampaignDetailView({
                 className="rich-content"
                 dangerouslySetInnerHTML={{ __html: campaign.campaignDetails }}
               />
+            </div>
+          </section>
+
+          <section className="overflow-hidden rounded-[24px] border border-[#D7E8FF] bg-white">
+            <div className="h-1.5 w-full bg-gradient-to-r from-[#2EABFC] to-[#0BB05F]" />
+            <div className="space-y-5 p-6 md:p-8">
+              <div>
+                <h2 className="text-2xl font-bold text-[#111827]">
+                  Admin Campaign Controls
+                </h2>
+                <p className="mt-1 text-sm text-[#5C5C5C]">
+                  Manage the approved budget and live dates from the admin panel.
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-[#111827]">
+                    Budget
+                  </label>
+                  <Input
+                    type="number"
+                    value={controlValues.proposedFunding}
+                    onChange={event =>
+                      setControlValues(current => ({
+                        ...current,
+                        proposedFunding: event.target.value,
+                      }))
+                    }
+                    className="h-[46px] rounded-[12px] border-[#E8EDF3] bg-[#FBFBFB]"
+                    placeholder="Enter budget"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-[#111827]">
+                    Start Date
+                  </label>
+                  <Input
+                    type="date"
+                    value={controlValues.creatingDate}
+                    onChange={event =>
+                      setControlValues(current => ({
+                        ...current,
+                        creatingDate: event.target.value,
+                      }))
+                    }
+                    className="h-[46px] rounded-[12px] border-[#E8EDF3] bg-[#FBFBFB]"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-[#111827]">
+                    End Date
+                  </label>
+                  <Input
+                    type="date"
+                    value={controlValues.endDate}
+                    onChange={event =>
+                      setControlValues(current => ({
+                        ...current,
+                        endDate: event.target.value,
+                      }))
+                    }
+                    className="h-[46px] rounded-[12px] border-[#E8EDF3] bg-[#FBFBFB]"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <Button
+                  type="button"
+                  onClick={handleControlSave}
+                  disabled={isUpdatingControls}
+                  className="rounded-full bg-[#2EABFC] px-5 text-white hover:bg-[#2396DF]"
+                >
+                  {isUpdatingControls ? 'Saving...' : 'Save Controls'}
+                </Button>
+              </div>
             </div>
           </section>
         </div>

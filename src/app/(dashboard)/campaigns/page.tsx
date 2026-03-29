@@ -7,10 +7,12 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { AppPagination } from '@/components/share/AppPagination'
 import { SearchField } from '@/components/share/SearchField'
-import { deleteCampaign, fetchCampaigns, updateCampaignStatus } from './api'
+import { deleteCampaign, fetchCampaigns, updateCampaignControls, updateCampaignStatus } from './api'
 import CampaignsTable from './_components/CampaignsTable'
 import CampaignTableSkeleton from './_components/CampaignTableSkeleton'
 import DeleteCampaignModal from './_components/DeleteCampaignModal'
+import EditControlsModal from './_components/EditControlsModal'
+import { Campaign } from './types'
 
 export default function CampaignsPage() {
   const { data: session } = useSession()
@@ -26,6 +28,7 @@ export default function CampaignsPage() {
   })
   const [updatingId, setUpdatingId] = useState<string | undefined>()
   const [updatingActiveId, setUpdatingActiveId] = useState<string | undefined>()
+  const [editCampaign, setEditCampaign] = useState<Campaign | null>(null)
 
   const { data, isLoading } = useQuery({
     queryKey: ['campaigns', page],
@@ -91,6 +94,24 @@ export default function CampaignsPage() {
     },
   })
 
+  const updateControlsMutation = useMutation({
+    mutationFn: (payload: {
+      proposedFunding?: number
+      creatingDate?: string
+      endDate?: string
+    }) => updateCampaignControls(token, editCampaign!._id, payload),
+    onSuccess: () => {
+      toast.success('Campaign controls updated')
+      queryClient.invalidateQueries({ queryKey: ['campaigns'] })
+      setEditCampaign(null)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error.response?.data?.message || 'Failed to update campaign controls',
+      )
+    },
+  })
+
   const filteredCampaigns =
     data?.data?.filter(c =>
       c.title.toLowerCase().includes(search.toLowerCase()),
@@ -141,6 +162,7 @@ export default function CampaignsPage() {
           onStatusChange={handleStatusChange}
           onActiveStatusChange={handleActiveStatusChange}
           onDelete={handleDeleteClick}
+          onEdit={setEditCampaign}
           updatingId={updatingId}
           updatingActiveId={updatingActiveId}
         />
@@ -162,6 +184,17 @@ export default function CampaignsPage() {
         campaignTitle={deleteModal.title}
         onConfirm={id => deleteMutation.mutate(id)}
         isDeleting={deleteMutation.isPending}
+      />
+
+      <EditControlsModal
+        isOpen={!!editCampaign}
+        onClose={() => setEditCampaign(null)}
+        campaignTitle={editCampaign?.title || ''}
+        proposedFunding={editCampaign?.proposedFunding}
+        creatingDate={editCampaign?.creatingDate || ''}
+        endDate={editCampaign?.endDate || ''}
+        onSave={payload => updateControlsMutation.mutate(payload)}
+        isSaving={updateControlsMutation.isPending}
       />
     </div>
   )
