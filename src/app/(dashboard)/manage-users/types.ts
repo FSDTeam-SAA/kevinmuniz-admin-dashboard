@@ -35,6 +35,11 @@ export interface ManagedUser {
     profileImage: string;
     isVerified: boolean;
     hasActiveSubscription: boolean;
+    jobRole?: string;
+    imdbLink?: string;
+    cv?: string;
+    isLive?: boolean;
+    bio?: string;
     address: UserAddress;
     campaigns: UserCampaign[];
     createdAt: string;

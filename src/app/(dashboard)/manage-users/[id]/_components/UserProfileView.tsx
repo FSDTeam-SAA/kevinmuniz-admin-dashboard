@@ -111,12 +111,15 @@ export default function UserProfileView({ user, token }: UserProfileViewProps) {
           {infoTitle}
         </h3>
         <div className="grid gap-y-8 gap-x-12 md:grid-cols-2">
-          {/* Full Name */}
+          {/* First Name */}
           <div className="space-y-2">
-            <p className="text-sm font-medium text-[#909090]">Full Name</p>
-            <p className="text-[#5C5C5C]">
-              {user.firstName} {user.lastName}
-            </p>
+            <p className="text-sm font-medium text-[#909090]">First Name</p>
+            <p className="text-[#5C5C5C]">{user.firstName || '—'}</p>
+          </div>
+          {/* Last Name */}
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-[#909090]">Last Name</p>
+            <p className="text-[#5C5C5C]">{user.lastName || '—'}</p>
           </div>
           {/* Username */}
           <div className="space-y-2">
@@ -133,6 +136,47 @@ export default function UserProfileView({ user, token }: UserProfileViewProps) {
             <p className="text-sm font-medium text-[#909090]">Phone number</p>
             <p className="text-[#5C5C5C]">{user.phoneNumber || '—'}</p>
           </div>
+          {/* Bio */}
+          <div className="space-y-2 md:col-span-2">
+            <p className="text-sm font-medium text-[#909090]">Bio / Description</p>
+            <p className="text-[#5C5C5C] leading-relaxed">
+              {user.bio || '—'}
+            </p>
+          </div>
+          {/* Job Role */}
+          {user.jobRole && (
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-[#909090]">Job Role</p>
+              <p className="text-[#5C5C5C]">{user.jobRole}</p>
+            </div>
+          )}
+          {/* IMDb Link */}
+          {user.imdbLink && (
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-[#909090]">IMDb Link</p>
+              <a href={user.imdbLink} target="_blank" rel="noopener noreferrer" className="text-[#2EABFC] hover:underline break-all">
+                {user.imdbLink}
+              </a>
+            </div>
+          )}
+          {/* CV */}
+          {user.cv && (
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-[#909090]">CV</p>
+              <a href={user.cv} target="_blank" rel="noopener noreferrer" className="text-[#2EABFC] hover:underline">
+                Download CV
+              </a>
+            </div>
+          )}
+          {/* Live Status */}
+          {!isCreator && (
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-[#909090]">Community Profile</p>
+              <p className="text-[#5C5C5C]">
+                {user.isLive ? 'Visible (Live)' : 'Hidden'}
+              </p>
+            </div>
+          )}
         </div>
         {/* Address */}
         <div className="mt-8 space-y-2">
@@ -167,11 +211,10 @@ export default function UserProfileView({ user, token }: UserProfileViewProps) {
                       {camp.title}
                     </h3>
                     <Badge
-                      className={`whitespace-nowrap px-3 py-1 text-xs font-semibold rounded-full border ${
-                        camp.activeStatus === 'active'
-                          ? 'bg-[#ECFDF5] text-[#10B981] border-[#A7F3D0] hover:bg-[#ECFDF5]'
-                          : 'bg-gray-100 text-gray-500 border-gray-200 hover:bg-gray-100'
-                      }`}
+                      className={`whitespace-nowrap px-3 py-1 text-xs font-semibold rounded-full border ${camp.activeStatus === 'active'
+                        ? 'bg-[#ECFDF5] text-[#10B981] border-[#A7F3D0] hover:bg-[#ECFDF5]'
+                        : 'bg-gray-100 text-gray-500 border-gray-200 hover:bg-gray-100'
+                        }`}
                     >
                       {camp.activeStatus === 'active' ? 'Active' : 'Donated'}
                     </Badge>
