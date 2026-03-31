@@ -41,6 +41,9 @@ export default function UsersTable({ users, onDelete, role }: UsersTableProps) {
                             User Location
                         </TableHead>
                         <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">
+                            Job Role
+                        </TableHead>
+                        <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">
                             Gender
                         </TableHead>
                         <TableHead className="text-left text-[#5C5C5C] font-semibold h-12">
@@ -78,6 +81,9 @@ export default function UsersTable({ users, onDelete, role }: UsersTableProps) {
                             <TableCell className="text-left text-[#5C5C5C]">
                                 {formatLocation(user.address)}
                             </TableCell>
+                            <TableCell className="text-left text-[#5C5C5C]">
+                                {user.jobRole || "—"}
+                            </TableCell>
                             <TableCell className="text-left text-[#5C5C5C] capitalize">
                                 {user.gender || "—"}
                             </TableCell>
@@ -104,7 +110,7 @@ export default function UsersTable({ users, onDelete, role }: UsersTableProps) {
                     {users.length === 0 && (
                         <TableRow>
                             <TableCell
-                                colSpan={4}
+                                colSpan={5}
                                 className="text-center py-10 text-[#909090]"
                             >
                                 No users found.
