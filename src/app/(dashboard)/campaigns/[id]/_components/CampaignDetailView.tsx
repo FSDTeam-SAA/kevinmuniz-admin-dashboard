@@ -151,12 +151,13 @@ export default function CampaignDetailView({
         {/* Left Content Column */}
         <div className="space-y-8 lg:col-span-8">
           <section className="space-y-6">
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[24px]">
+            <div className="relative min-h-[430px] w-full overflow-hidden rounded-[24px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] px-4 py-6 md:min-h-[560px]">
               <Image
                 src={campaign.image || '/assets/images/placeholder.png'}
                 alt={campaign.title}
                 fill
-                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 66vw"
+                className="p-4 object-contain"
                 priority
               />
             </div>
