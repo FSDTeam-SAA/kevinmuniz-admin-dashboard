@@ -10,6 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 import { Campaign } from "../types";
 import StatusDropdown from "./StatusDropdown";
 import ActiveStatusDropdown from "./ActiveStatusDropdown";
@@ -18,20 +19,24 @@ interface CampaignsTableProps {
     campaigns: Campaign[];
     onStatusChange: (id: string, status: "accepted" | "rejected") => void;
     onActiveStatusChange: (id: string, activeStatus: "active" | "inactive") => void;
+    onFeatureToggle: (id: string, isFeatured: boolean) => void;
     onDelete: (id: string, title: string) => void;
     onEdit: (campaign: Campaign) => void;
     updatingId?: string;
     updatingActiveId?: string;
+    updatingFeaturedId?: string;
 }
 
 export default function CampaignsTable({
     campaigns,
     onStatusChange,
     onActiveStatusChange,
+    onFeatureToggle,
     onDelete,
     onEdit,
     updatingId,
     updatingActiveId,
+    updatingFeaturedId,
 }: CampaignsTableProps) {
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
@@ -46,6 +51,8 @@ export default function CampaignsTable({
         return `${mm}/${dd}/${yyyy} ${hhStr}:${min}${ampm}`;
     };
 
+    const formatCurrency = (amount: number) => `$${Number(amount || 0).toLocaleString()}`;
+
     return (
         <div className="rounded-[20px] bg-transparent overflow-hidden">
             <Table>
@@ -57,6 +64,7 @@ export default function CampaignsTable({
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Date</TableHead>
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Approval Status</TableHead>
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Active Status</TableHead>
+                        <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Feature</TableHead>
                         <TableHead className="text-center text-[#5C5C5C] font-semibold h-12">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -69,7 +77,7 @@ export default function CampaignsTable({
                             <TableCell className="text-center text-[#5C5C5C]">
                                 {campaign.createdBy?.firstName ? `${campaign.createdBy.firstName} ${campaign.createdBy.lastName || ""}` : campaign.createdBy?.email || "N/A"}
                             </TableCell>
-                            <TableCell className="text-center text-[#1E1E1E]">500$</TableCell>
+                            <TableCell className="text-center text-[#1E1E1E]">{formatCurrency(campaign.totalRaised)}</TableCell>
                             <TableCell className="text-center text-[#5C5C5C]">{formatDate(campaign.createdAt)}</TableCell>
                             <TableCell className="text-center">
                                 <StatusDropdown
@@ -84,6 +92,28 @@ export default function CampaignsTable({
                                     onStatusChange={(activeStatus) => onActiveStatusChange(campaign._id, activeStatus)}
                                     isLoading={updatingActiveId === campaign._id}
                                 />
+                            </TableCell>
+                            <TableCell className="text-center">
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    disabled={
+                                        updatingFeaturedId === campaign._id ||
+                                        campaign.approvalStatus !== "accepted"
+                                    }
+                                    onClick={() => onFeatureToggle(campaign._id, !campaign.isFeatured)}
+                                    className={
+                                        campaign.isFeatured
+                                            ? "border-[#F5C451] bg-[#FFF8DB] text-[#A16207] hover:bg-[#FFF1B8]"
+                                            : "border-[#D7E8FF] text-[#2EABFC] hover:bg-[#F3FAFF]"
+                                    }
+                                >
+                                    {updatingFeaturedId === campaign._id
+                                        ? "Saving..."
+                                        : campaign.isFeatured
+                                          ? "Featured"
+                                          : "Feature"}
+                                </Button>
                             </TableCell>
                             <TableCell className="text-center">
                                 <div className="flex items-center justify-center gap-3">

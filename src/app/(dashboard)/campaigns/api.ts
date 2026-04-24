@@ -46,6 +46,7 @@ export const updateCampaignStatus = async (
     payload: {
         approvalStatus?: "accepted" | "rejected";
         activeStatus?: "active" | "inactive";
+        isFeatured?: boolean;
     }
 ): Promise<void> => {
     await axios.put(

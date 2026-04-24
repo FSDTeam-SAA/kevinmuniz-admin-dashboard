@@ -28,6 +28,7 @@ export default function CampaignsPage() {
   })
   const [updatingId, setUpdatingId] = useState<string | undefined>()
   const [updatingActiveId, setUpdatingActiveId] = useState<string | undefined>()
+  const [updatingFeaturedId, setUpdatingFeaturedId] = useState<string | undefined>()
   const [editCampaign, setEditCampaign] = useState<Campaign | null>(null)
 
   const { data, isLoading } = useQuery({
@@ -94,6 +95,30 @@ export default function CampaignsPage() {
     },
   })
 
+  const updateFeaturedMutation = useMutation({
+    mutationFn: ({
+      id,
+      isFeatured,
+    }: {
+      id: string
+      isFeatured: boolean
+    }) => {
+      setUpdatingFeaturedId(id)
+      return updateCampaignStatus(token, id, { isFeatured })
+    },
+    onSuccess: () => {
+      toast.success('Campaign feature status updated')
+      queryClient.invalidateQueries({ queryKey: ['campaigns'] })
+      setUpdatingFeaturedId(undefined)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error.response?.data?.message || 'Failed to update feature status',
+      )
+      setUpdatingFeaturedId(undefined)
+    },
+  })
+
   const updateControlsMutation = useMutation({
     mutationFn: (payload: {
       proposedFunding?: number
@@ -132,6 +157,10 @@ export default function CampaignsPage() {
     setDeleteModal({ isOpen: true, id, title })
   }
 
+  const handleFeatureToggle = (id: string, isFeatured: boolean) => {
+    updateFeaturedMutation.mutate({ id, isFeatured })
+  }
+
   if (isLoading) {
     return (
       <div className="space-y-6 p-4 md:p-8">
@@ -161,10 +190,12 @@ export default function CampaignsPage() {
           campaigns={filteredCampaigns}
           onStatusChange={handleStatusChange}
           onActiveStatusChange={handleActiveStatusChange}
+          onFeatureToggle={handleFeatureToggle}
           onDelete={handleDeleteClick}
           onEdit={setEditCampaign}
           updatingId={updatingId}
           updatingActiveId={updatingActiveId}
+          updatingFeaturedId={updatingFeaturedId}
         />
 
         {data?.pagination && (
