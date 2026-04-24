@@ -42,6 +42,8 @@ export interface Campaign {
   createdBy: CampaignCreator
   approvalStatus: 'pending' | 'accepted' | 'rejected'
   activeStatus: 'active' | 'inactive'
+  isFeatured: boolean
+  totalRaised: number
   createdAt: string
   updatedAt: string
 }
