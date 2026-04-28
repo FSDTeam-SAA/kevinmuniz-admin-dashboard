@@ -20,10 +20,14 @@ export async function middleware(request: NextRequest) {
 
   if (isAuthRoute(pathname)) {
     if (isAuthenticated && isAdmin) {
-      return NextResponse.redirect(new URL("/", request.url));
+      const response = NextResponse.redirect(new URL("/", request.url));
+      response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+      return response;
     }
 
-    return NextResponse.next();
+    const response = NextResponse.next();
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    return response;
   }
 
   if (!isAuthenticated || !isAdmin) {
@@ -37,10 +41,14 @@ export async function middleware(request: NextRequest) {
       signInUrl.searchParams.set("error", "ADMIN_ONLY");
     }
 
-    return NextResponse.redirect(signInUrl);
+    const response = NextResponse.redirect(signInUrl);
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    return response;
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+  return response;
 }
 
 export const config = {

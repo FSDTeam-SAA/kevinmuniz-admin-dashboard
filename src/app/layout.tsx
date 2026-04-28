@@ -20,6 +20,19 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Hierarchy of visionaries Admin Dashboard',
   description: 'Admin dashboard for Hierarchy of visionaries',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      'max-snippet': -1,
+      'max-image-preview': 'none',
+      'max-video-preview': -1,
+    },
+  },
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
